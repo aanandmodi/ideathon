@@ -3,22 +3,21 @@
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X, Zap, ChevronDown } from "lucide-react"
+import { Menu, X, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const navItems = [
   { name: "Home", href: "/" },
-  { name: "Challenges", href: "/events" },
+  { name: "Challenges", href: "/challenges" },
   { name: "Timeline", href: "/timeline" },
   { name: "Prizes", href: "/prizes" },
-  { name: "Glimpse", href: "/glimpses" },
-  { name: "Speakers & Sponsors", href: "/speakers-sponsors" },
 ]
 
 const aboutDropdownItems = [
-  { name: "About Page", href: "/about" },
+  { name: "Glimpse", href: "/glimpses" },
+  { name: "Speakers & Sponsors", href: "/speakers-sponsors" },
   { name: "Team", href: "/team" },
-  { name: "Contact Us", href: "/contact" },
+  { name: "About Page", href: "/about" },
 ]
 
 export default function Navbar() {
@@ -61,24 +60,21 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3">
-  <div className="w-10 h-10 rounded-xl overflow-hidden">
-    <img
-      src="/logo.png"
-      alt="E-Cell Ignite Logo"
-      className="h-full w-full object-cover"
-    />
-  </div>
-  <div className="block">
-    <span className="text-white font-bold text-lg">Ecell Ignite</span>
-    <div className="text-xs text-muted">Ideathon 2025</div>
-  </div>
-</Link>
+            <div className="w-10 h-10 rounded-xl overflow-hidden">
+              <img
+                src="/logo.png"
+                alt="E-Cell Ignite Logo"
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div className="block">
+              <span className="text-white font-bold text-lg">Ecell Ignite</span>
+              <div className="text-xs text-muted">Ideathon 2025</div>
+            </div>
+          </Link>
 
-
-
-
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center space-x-1">
+          {/* Right-Aligned Nav and Register Button (Desktop/Tablet) */}
+          <div className="hidden md:flex items-center space-x-1 ml-auto">
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -93,13 +89,13 @@ export default function Navbar() {
               </Link>
             ))}
 
-            {/* About Dropdown */}
+            {/* Know More Dropdown */}
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen((prev) => !prev)}
                 className="flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all"
               >
-                About Us <ChevronDown size={16} />
+                Know More <ChevronDown size={16} />
               </button>
               {dropdownOpen && (
                 <div className="absolute top-full mt-2 w-48 bg-white/10 backdrop-blur border border-white/10 text-white rounded-xl overflow-hidden shadow-lg transition-all duration-300">
@@ -117,18 +113,29 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* Register Button */}
+            {/* Register Button (desktop + tablet) */}
             <Link
               href="/register"
-              className="ml-2 relative group inline-block overflow-hidden rounded-full px-5 py-2 text-sm font-semibold text-white bg-gradient-to-br from-purple-600 to-blue-500 to-orange-500 shadow-md transition-transform duration-300 hover:-translate-y-1"
+              className="ml-4 relative group inline-block overflow-hidden rounded-full px-5 py-2 text-sm font-semibold text-white bg-gradient-to-br from-purple-600 via-blue-600 to-orange-200 shadow-md transition-transform duration-300 hover:-translate-y-1"
             >
               <span className="relative z-10">Register Now</span>
               <span className="absolute -inset-1 before:content-[''] before:absolute before:inset-0 before:bg-white/40 before:transform before:-translate-x-full group-hover:before:translate-x-full before:rotate-45 before:transition-transform before:duration-700 before:blur-sm z-0"></span>
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="lg:hidden ml-2">
+          {/* Mobile Register Button + Menu Toggle */}
+          <div className="md:hidden flex items-center space-x-2 ml-auto">
+            <Link
+              href="/register"
+              className="relative group inline-block overflow-hidden rounded-full px-5 py-2 text-sm font-semibold text-white bg-gradient-to-br from-purple-600 via-blue-600 to-orange-200 shadow-md transition-transform duration-300 hover:-translate-y-1"
+            >
+              <span className="relative z-10">
+                <span className="block md:hidden">Register</span>
+                <span className="hidden md:block">Register Now</span>
+              </span>
+              <span className="absolute -inset-1 before:content-[''] before:absolute before:inset-0 before:bg-white/40 before:transform before:-translate-x-full group-hover:before:translate-x-full before:rotate-45 before:transition-transform before:duration-700 before:blur-sm z-0"></span>
+            </Link>
+
             <button
               onClick={() => setIsOpen((prev) => !prev)}
               className="text-white hover:text-primary transition-colors p-2"
@@ -138,9 +145,9 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Nav */}
+        {/* Mobile Nav Panel */}
         {isOpen && (
-          <div className="lg:hidden mt-4 pt-4 border-t border-white/10">
+          <div className="md:hidden mt-4 pt-4 border-t border-white/10">
             <div className="grid grid-cols-2 gap-2">
               {navItems.map((item) => (
                 <Link
@@ -156,7 +163,6 @@ export default function Navbar() {
                   {item.name}
                 </Link>
               ))}
-
               {aboutDropdownItems.map((item) => (
                 <Link
                   key={item.name}

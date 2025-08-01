@@ -157,8 +157,7 @@ export default function GlimpsesPage() {
             Past <span className="text-gradient">Glimpses</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-            Take a look at the sparks of innovation from past years. Witness the energy, creativity, and groundbreaking
-            solutions that emerged from our Ideathon.
+          Catch the highlights of past Ideathons: unstoppable energy, bold creativity, and game-changing innovations.
           </p>
         </section>
 
@@ -258,37 +257,6 @@ export default function GlimpsesPage() {
             </div>
           </div>
         )}
-
-        {/* Enhanced Stats Section */}
-        <section className="mt-24 glass-effect-strong p-12 rounded-3xl">
-          <h2 className="text-5xl font-bold text-white text-center mb-16">
-            Event <span className="text-gradient">Highlights</span>
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center group">
-              <div className="text-5xl font-bold text-gradient mb-4 group-hover:scale-110 transition-transform">48</div>
-              <div className="text-white font-semibold">Hours of Innovation</div>
-            </div>
-            <div className="text-center group">
-              <div className="text-5xl font-bold text-gradient mb-4 group-hover:scale-110 transition-transform">
-                150+
-              </div>
-              <div className="text-white font-semibold">Teams Formed</div>
-            </div>
-            <div className="text-center group">
-              <div className="text-5xl font-bold text-gradient mb-4 group-hover:scale-110 transition-transform">
-                25+
-              </div>
-              <div className="text-white font-semibold">Mentors</div>
-            </div>
-            <div className="text-center group">
-              <div className="text-5xl font-bold text-gradient mb-4 group-hover:scale-110 transition-transform">
-                10+
-              </div>
-              <div className="text-white font-semibold">Industry Partners</div>
-            </div>
-          </div>
-        </section>
       </div>
     </div>
   )

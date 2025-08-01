@@ -55,8 +55,7 @@ export default function HomePage() {
             </div>
 
             <p className="hero-subtitle text-gray-300 max-w-3xl mx-auto mb-12 text-xl leading-relaxed">
-              Transform Ideas Into Reality. Join the most exciting ideathon of 2025 where innovation meets opportunity.
-              Collaborate, compete, and create solutions that matter.
+            Think bold, act together
             </p>
 
             {/* Redesigned Countdown */}
@@ -181,59 +180,38 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="section-padding">
-        <div className="container-max px-2 sm:px-4 md:px-8">
-          <div className="glass-effect p-12 rounded-3xl">
-            <div className="text-center mb-12">
-              <h2 className="heading-lg">
-                Event <span className="text-gradient">Highlights</span>
-              </h2>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-gradient mb-2">500+</div>
-                <div className="text-gray-400">Participants</div>
+              {/* Stats Section */}
+         <section className="section-padding">
+          <div className="container-max px-2 sm:px-4 md:px-8">
+            <div className="glass-effect p-6 sm:p-10 md:p-12 rounded-3xl">
+              <div className="text-center mb-12">
+                <h2 className="heading-lg">
+                  Event <span className="text-gradient">Highlights</span>
+                </h2>
               </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-gradient mb-2">48</div>
-                <div className="text-gray-400">Hours</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-gradient mb-2">25+</div>
-                <div className="text-gray-400">Mentors</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-gradient mb-2">₹2.5L</div>
-                <div className="text-gray-400">Prize Pool</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="section-padding">
-        <div className="container-max px-2 sm:px-4 md:px-8">
-          <div className="text-center glass-effect p-12 rounded-3xl">
-            <h2 className="heading-lg mb-6">
-              Ready to <span className="text-gradient">Innovate</span>?
-            </h2>
-            <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
-              Don't miss this opportunity to showcase your ideas, learn from experts, and win amazing prizes.
-            </p>
-            <Button
-              asChild
-              size="lg"
-              className="btn-register btn-modern text-white px-16 py-6 rounded-full text-2xl font-bold"
-            >
-              <Link href="/register" className="flex items-center">
-                Register Now <ArrowRight className="ml-3" size={28} />
-              </Link>
-            </Button>
+              <div className="flex flex-wrap justify-center gap-6 md:gap-10">
+                {/* Participants */}
+                <div className="w-1/2 md:w-1/4 text-center space-y-2">
+                  <div className="text-4xl font-bold text-gradient">300+</div>
+                  <div className="text-gray-400">Participants</div>
+                </div>
+
+                {/* Hours */}
+                <div className="w-1/2 md:w-1/4 text-center space-y-2">
+                  <div className="text-4xl font-bold text-gradient">48</div>
+                  <div className="text-gray-400">Hours</div>
+                </div>
+
+                {/* Prize Pool */}
+                <div className="w-1/2 md:w-1/4 text-center space-y-2">
+                  <div className="text-4xl font-bold text-gradient">₹2.5L</div>
+                  <div className="text-gray-400">Prize Pool</div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
     </div>
   )
 }

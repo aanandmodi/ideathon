@@ -76,8 +76,7 @@ export default function PrizesPage() {
               Amazing <span className="text-gradient">Prizes</span>
             </h1>
             <p className="text-xl text-gray-300 leading-relaxed">
-              Compete for an incredible prize pool of ₹2.5 Lakhs+ along with exclusive mentorship opportunities,
-              incubation support, and industry networking.
+            Win from a prize pool worth ₹2.5 Lakhs+ plus get exclusive mentorship, incubation support, and powerful industry connections.
             </p>
           </div>
 
@@ -144,40 +143,6 @@ export default function PrizesPage() {
             </div>
           </div>
 
-          {/* Additional Benefits */}
-          <div className="glass-effect p-12 rounded-3xl mb-20">
-            <h2 className="text-4xl font-bold text-white text-center mb-12">
-              Beyond <span className="text-gradient">Prizes</span>
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-2xl font-bold text-white mb-4">🚀 Incubation Support</h3>
-                <p className="text-gray-300 mb-6">
-                  Top teams get access to our incubation program with workspace, legal support, and funding
-                  opportunities.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-white mb-4">🤝 Mentorship Program</h3>
-                <p className="text-gray-300 mb-6">
-                  Connect with industry veterans and successful entrepreneurs for ongoing guidance and support.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-white mb-4">🌐 Industry Networking</h3>
-                <p className="text-gray-300 mb-6">
-                  Build valuable connections with investors, industry leaders, and fellow entrepreneurs.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-white mb-4">📜 Certificates</h3>
-                <p className="text-gray-300 mb-6">
-                  All participants receive certificates of participation, winners get special recognition certificates.
-                </p>
-              </div>
-            </div>
-          </div>
-
           {/* Prize Pool Breakdown */}
           <div className="glass-effect p-12 rounded-3xl mb-20">
             <h2 className="text-3xl font-bold text-white text-center mb-8">
@@ -201,25 +166,6 @@ export default function PrizesPage() {
                 <div className="text-white text-sm">Special Prizes</div>
               </div>
             </div>
-          </div>
-
-          {/* Register Now CTA */}
-          <div className="text-center glass-effect-strong p-12 rounded-3xl">
-            <h2 className="text-4xl font-bold text-white mb-8">
-              Ready to <span className="text-gradient">Compete</span>?
-            </h2>
-            <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Don't miss your chance to win amazing prizes and kickstart your entrepreneurial journey. Register now!
-            </p>
-            <Button
-              asChild
-              size="lg"
-              className="btn-register btn-modern text-white px-16 py-6 rounded-full text-2xl font-bold"
-            >
-              <Link href="/register" className="flex items-center">
-                Register Now <ArrowRight className="ml-3" size={28} />
-              </Link>
-            </Button>
           </div>
         </div>
       </section>

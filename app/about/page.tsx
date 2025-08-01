@@ -11,8 +11,7 @@ export default function AboutPage() {
               About <span className="text-gradient">Ideathon 2025</span>
             </h1>
             <p className="text-xl text-gray-300 leading-relaxed">
-              The Ecell Ignite Ideathon is where innovation meets opportunity. Join us for 48 hours of intensive
-              collaboration, mentorship, and groundbreaking solution development.
+            E-Cell Ignite Ideathon: Where bold ideas turn into real-world impact. Experience 48 hours of creativity, mentorship, and innovation.
             </p>
           </div>
 
@@ -24,8 +23,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-2xl font-bold text-white mb-4">Our Mission</h3>
               <p className="text-gray-300 leading-relaxed">
-                To create a platform where innovative minds converge to solve real-world problems, fostering
-                entrepreneurship and technological advancement among students and young professionals.
+              Our mission is to build a platform where bright minds unite to solve real-world challenges, driving entrepreneurship and technological progress among students and young professionals.
               </p>
             </div>
 
@@ -35,8 +33,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-2xl font-bold text-white mb-4">Our Vision</h3>
               <p className="text-gray-300 leading-relaxed">
-                To be the premier innovation platform that transforms ideas into impactful solutions, creating the next
-                generation of entrepreneurs and change-makers.
+              To become the leading innovation platform that turns ideas into impactful solutions, shaping the next generation of entrepreneurs and changemakers.
               </p>
             </div>
           </div>
@@ -75,61 +72,6 @@ export default function AboutPage() {
                 <p className="text-gray-400">
                   Continued mentorship, incubation opportunities, and investor connections.
                 </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Event Journey */}
-          <div className="mb-20">
-            <h2 className="text-3xl font-bold text-white text-center mb-12">
-              Our <span className="text-gradient">Journey</span>
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="glass-effect p-8 rounded-2xl text-center">
-                <div className="text-6xl font-bold text-gradient mb-4">2022</div>
-                <h3 className="text-xl font-semibold text-white mb-3">The Beginning</h3>
-                <p className="text-gray-400">Started with 100 participants and big dreams of fostering innovation.</p>
-              </div>
-
-              <div className="glass-effect p-8 rounded-2xl text-center">
-                <div className="text-6xl font-bold text-gradient mb-4">2023</div>
-                <h3 className="text-xl font-semibold text-white mb-3">Growth</h3>
-                <p className="text-gray-400">Expanded to 300 participants with industry partnerships and mentorship.</p>
-              </div>
-
-              <div className="glass-effect p-8 rounded-2xl text-center">
-                <div className="text-6xl font-bold text-gradient mb-4">2025</div>
-                <h3 className="text-xl font-semibold text-white mb-3">Innovation Hub</h3>
-                <p className="text-gray-400">500+ participants, ₹2.5L prize pool, and startup incubation support.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Key Statistics */}
-          <div className="glass-effect p-12 rounded-3xl">
-            <h2 className="text-3xl font-bold text-white text-center mb-12">
-              Impact <span className="text-gradient">Statistics</span>
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <div className="text-center">
-                <Award className="text-blue-400 mx-auto mb-4" size={40} />
-                <div className="text-3xl font-bold text-gradient mb-2">50+</div>
-                <div className="text-gray-400">Awards Given</div>
-              </div>
-              <div className="text-center">
-                <Users className="text-purple-400 mx-auto mb-4" size={40} />
-                <div className="text-3xl font-bold text-gradient mb-2">900+</div>
-                <div className="text-gray-400">Total Participants</div>
-              </div>
-              <div className="text-center">
-                <Lightbulb className="text-cyan-400 mx-auto mb-4" size={40} />
-                <div className="text-3xl font-bold text-gradient mb-2">200+</div>
-                <div className="text-gray-400">Ideas Pitched</div>
-              </div>
-              <div className="text-center">
-                <Rocket className="text-green-400 mx-auto mb-4" size={40} />
-                <div className="text-3xl font-bold text-gradient mb-2">25+</div>
-                <div className="text-gray-400">Startups Launched</div>
               </div>
             </div>
           </div>

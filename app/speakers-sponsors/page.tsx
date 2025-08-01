@@ -65,66 +65,80 @@ const speakers = [
   },
 ]
 
-const titleSponsor = {
-  name: "TechCorp Global",
-  logo: "/placeholder.svg?height=120&width=300&text=TechCorp+Global",
-  website: "https://techcorp.com",
-  description: "Leading technology solutions provider empowering innovation worldwide.",
-  tier: "Platinum",
-}
+const allSponsors = [
+    { name: "TechCorp Global", logo: "/placeholder.svg?height=100&width=250&text=TechCorp+Global", website: "#" },
+    { name: "InnovateLabs", logo: "/placeholder.svg?height=100&width=250&text=InnovateLabs", website: "#" },
+    { name: "StartupHub", logo: "/placeholder.svg?height=100&width=250&text=StartupHub", website: "#" },
+    { name: "VentureCapital Pro", logo: "/placeholder.svg?height=100&width=250&text=VentureCapital+Pro", website: "#" },
+    { name: "Future Systems", logo: "/placeholder.svg?height=100&width=250&text=Future+Systems", website: "#" },
+    { name: "NextGen AI", logo: "/placeholder.svg?height=100&width=250&text=NextGen+AI", website: "#" },
+    { name: "EcoSolutions", logo: "/placeholder.svg?height=100&width=250&text=EcoSolutions", website: "#" },
+    { name: "QuantumLeap", logo: "/placeholder.svg?height=100&width=250&text=QuantumLeap", website: "#" },
+];
 
-const coSponsors = [
-  {
-    name: "InnovateLabs",
-    logo: "/placeholder.svg?height=80&width=200&text=InnovateLabs",
-    website: "https://innovatelabs.com",
-    tier: "Gold",
-  },
-  {
-    name: "StartupHub",
-    logo: "/placeholder.svg?height=80&width=200&text=StartupHub",
-    website: "https://startuphub.com",
-    tier: "Gold",
-  },
-  {
-    name: "VentureCapital Pro",
-    logo: "/placeholder.svg?height=80&width=200&text=VentureCapital+Pro",
-    website: "https://vcpro.com",
-    tier: "Gold",
-  },
-]
+// Reusable Marquee Component for Sponsors
+const SponsorMarquee = ({ sponsors, speed = '80s' }: {
+  sponsors: { name: string; logo: string; website: string }[];
+  speed?: string;
+}) => {
+  return (
+    <div className="relative w-full overflow-hidden group">
+      <div 
+        className="marquee-content flex w-max animate-[marquee-left_var(--marquee-speed)_linear_infinite] group-hover:[animation-play-state:paused]"
+        style={{ '--marquee-speed': speed } as React.CSSProperties}
+      >
+        {/* Render logos twice for a seamless loop */}
+        {[...sponsors, ...sponsors].map((sponsor, index) => (
+          <Link href={sponsor.website} key={index} target="_blank" className="flex-shrink-0 mx-4 p-1 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors duration-300">
+             <div className="relative glass-effect rounded-xl overflow-hidden p-6 group/item flex items-center justify-center">
+                <Image
+                  src={sponsor.logo}
+                  alt={`${sponsor.name} logo`}
+                  width={250}
+                  height={100}
+                  // Increased logo height from h-16 to h-20 for bigger tiles
+                  className="h-20 w-auto object-contain transition-all duration-300 filter grayscale group-hover/item:filter-none group-hover/item:scale-105"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement
+                    target.src = `/placeholder.svg?height=100&width=250&text=${encodeURIComponent(sponsor.name)}`
+                  }}
+                />
+                {/* Glowing Border Effect */}
+                <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover/item:border-purple-500/50 transition-all duration-300" style={{
+                    mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                    maskComposite: 'exclude'
+                }}></div>
+             </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 
 export default function SpeakersSponsorsPage() {
   const [selectedSpeaker, setSelectedSpeaker] = useState<(typeof speakers)[0] | null>(null)
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="section-padding pt-32">
+      <section className="section-padding pt-40 md:pt-48">
         <div className="container-max">
-          <div className="text-center max-w-4xl mx-auto mb-20">
+          <div className="text-center max-w-4xl mx-auto mb-20 md:mb-24">
             <h1 className="heading-xl">
               Speakers & <span className="text-gradient">Sponsors</span>
             </h1>
-            <p className="text-xl text-gray-300 leading-relaxed">
-              Meet our distinguished speakers and generous sponsors who make this incredible event possible. Learn from
-              industry leaders and connect with organizations shaping the future of technology.
+            <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
+              Speakers who inspire. Sponsors who empower. Together, they make this journey possible.
             </p>
           </div>
 
           {/* Speakers Section */}
-          <div className="mb-32">
+          <div className="mb-24 md:mb-32">
             <div className="text-center mb-16">
-              <div className="inline-flex items-center px-6 py-3 rounded-full glass-effect mb-6">
-                <Star className="text-yellow-400 mr-2" size={20} />
-                <span className="text-white font-semibold">Distinguished Speakers</span>
-              </div>
-              <h2 className="text-5xl font-bold text-white mb-6">
-                Learn from the <span className="text-gradient">Best</span>
+               <h2 className="text-4xl md:text-5xl font-bold text-white">
+                Meet Our <span className="text-gradient">Speakers</span>
               </h2>
-              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                Get insights from industry veterans, successful entrepreneurs, and innovation experts.
-              </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
@@ -164,8 +178,7 @@ export default function SpeakersSponsorsPage() {
               ))}
             </div>
 
-            {/* What to Expect from Speakers */}
-            <div className="glass-effect-strong p-12 rounded-3xl">
+            <div className="glass-effect-strong p-8 md:p-12 rounded-3xl">
               <h3 className="text-3xl font-bold text-white text-center mb-12">
                 What to <span className="text-gradient">Expect</span>
               </h3>
@@ -187,99 +200,41 @@ export default function SpeakersSponsorsPage() {
           </div>
 
           {/* Sponsors Section */}
-          <div className="mb-20">
+          <div className="mb-24 md:mb-32">
             <div className="text-center mb-16">
               <div className="inline-flex items-center px-6 py-3 rounded-full glass-effect mb-6">
                 <Award className="text-green-400 mr-2" size={20} />
-                <span className="text-white font-semibold">Our Sponsors</span>
+                <span className="text-white font-semibold">Our Valued Partners</span>
               </div>
-              <h2 className="text-5xl font-bold text-white mb-6">
-                Powered by <span className="text-gradient">Innovation</span>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                Powered by <span className="text-gradient">Industry Leaders</span>
               </h2>
-              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                We're grateful to our amazing sponsors who make this event possible and support the next generation of
-                innovators.
+              <p className="text-gray-400 text-lg max-w-3xl mx-auto">
+                We're grateful for the incredible support from our sponsors who are committed to fostering innovation and empowering the next generation of talent.
               </p>
             </div>
 
-            {/* Title Sponsor */}
-            <div className="mb-20">
-              <div className="text-center mb-8">
-                <span className="inline-block px-4 py-2 bg-yellow-500/20 border border-yellow-500/30 rounded-full text-yellow-300 text-sm font-semibold">
-                  Platinum Sponsor
-                </span>
-              </div>
-              <div className="glass-effect-strong p-12 rounded-3xl text-center hover-glow max-w-4xl mx-auto">
-                <Link href={titleSponsor.website} target="_blank" className="block">
-                  <div className="mb-8">
-                    <div className="inline-block p-6 bg-white/5 rounded-3xl mb-6">
-                      <Image
-                        src={titleSponsor.logo || "/placeholder.svg"}
-                        alt={titleSponsor.name}
-                        width={300}
-                        height={120}
-                        className="hover:scale-105 transition-transform duration-300"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement
-                          target.src = `/placeholder.svg?height=120&width=300&text=${encodeURIComponent(titleSponsor.name)}`
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <h3 className="text-3xl font-bold text-white mb-4">{titleSponsor.name}</h3>
-                  <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">{titleSponsor.description}</p>
-                </Link>
-              </div>
-            </div>
-
-            {/* Co-Sponsors */}
-            <div className="mb-20">
-              <div className="text-center mb-8">
-                <span className="inline-block px-4 py-2 bg-blue-500/20 border border-blue-500/30 rounded-full text-blue-300 text-sm font-semibold">
-                  Gold Sponsors
-                </span>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {coSponsors.map((sponsor, index) => (
-                  <div key={index} className="glass-effect-strong p-8 rounded-3xl text-center hover-glow group">
-                    <Link href={sponsor.website} target="_blank" className="block">
-                      <div className="p-4 bg-white/5 rounded-2xl mb-4 inline-block">
-                        <Image
-                          src={sponsor.logo || "/placeholder.svg"}
-                          alt={sponsor.name}
-                          width={200}
-                          height={80}
-                          className="group-hover:scale-105 transition-transform duration-300"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement
-                            target.src = `/placeholder.svg?height=80&width=200&text=${encodeURIComponent(sponsor.name)}`
-                          }}
-                        />
-                      </div>
-                      <h3 className="text-xl font-bold text-white">{sponsor.name}</h3>
-                    </Link>
-                  </div>
-                ))}
-              </div>
+            <div className="relative py-8 [mask-image:linear-gradient(to_right,transparent,white_15%,white_85%,transparent)]">
+                <SponsorMarquee sponsors={allSponsors} speed="80s" />
             </div>
           </div>
 
           {/* Register Now CTA */}
-          <div className="text-center glass-effect-strong p-12 rounded-3xl mb-20">
-            <h2 className="text-4xl font-bold text-white mb-8">
+          <div className="text-center glass-effect-strong p-8 md:p-12 rounded-3xl mb-20">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
               Ready to <span className="text-gradient">Learn</span> from the Best?
             </h2>
-            <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
               Don't miss this opportunity to learn from industry leaders and connect with amazing sponsors. Register
               now!
             </p>
             <Button
               asChild
               size="lg"
-              className="btn-register btn-modern text-white px-16 py-6 rounded-full text-2xl font-bold"
+              className="btn-register btn-modern text-white px-12 md:px-16 py-5 md:py-6 rounded-full text-lg md:text-xl font-bold"
             >
               <Link href="/register" className="flex items-center">
-                Register Now <ArrowRight className="ml-3" size={28} />
+                Register Now <ArrowRight className="ml-3" size={24} />
               </Link>
             </Button>
           </div>
@@ -288,22 +243,22 @@ export default function SpeakersSponsorsPage() {
           {selectedSpeaker && (
             <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
               <div className="glass-effect-strong rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="relative p-8">
+                <div className="relative p-6 md:p-8">
                   <button
                     onClick={() => setSelectedSpeaker(null)}
-                    className="absolute top-4 right-4 text-white hover:text-purple-400 transition-colors"
+                    className="absolute top-4 right-4 text-white hover:text-purple-400 transition-colors z-10"
                   >
                     <X size={24} />
                   </button>
 
                   <div className="flex flex-col md:flex-row gap-6">
-                    <div className="md:w-1/3">
+                    <div className="md:w-1/3 flex-shrink-0">
                       <Image
                         src={selectedSpeaker.image || "/placeholder.svg"}
                         alt={selectedSpeaker.name}
                         width={200}
                         height={200}
-                        className="w-full h-48 md:h-auto object-cover rounded-2xl"
+                        className="w-full h-48 md:h-full object-cover rounded-2xl"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement
                           target.src = `/placeholder.svg?height=200&width=200&text=${encodeURIComponent(selectedSpeaker.name)}`
@@ -312,27 +267,18 @@ export default function SpeakersSponsorsPage() {
                     </div>
 
                     <div className="md:w-2/3">
-                      <h2 className="text-3xl font-bold text-white mb-2">{selectedSpeaker.name}</h2>
+                      <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">{selectedSpeaker.name}</h2>
                       <p className="text-blue-400 font-semibold mb-1">{selectedSpeaker.title}</p>
                       <p className="text-gray-300 mb-4">{selectedSpeaker.company}</p>
 
                       <div className="flex space-x-4 mb-6">
-                        <a
-                          href={selectedSpeaker.social.linkedin}
-                          className="text-gray-300 hover:text-purple-400 transition-colors"
-                        >
+                        <a href={selectedSpeaker.social.linkedin} className="text-gray-300 hover:text-purple-400 transition-colors">
                           <Linkedin size={20} />
                         </a>
-                        <a
-                          href={selectedSpeaker.social.twitter}
-                          className="text-gray-300 hover:text-purple-400 transition-colors"
-                        >
+                        <a href={selectedSpeaker.social.twitter} className="text-gray-300 hover:text-purple-400 transition-colors">
                           <Twitter size={20} />
                         </a>
-                        <a
-                          href={selectedSpeaker.social.website}
-                          className="text-gray-300 hover:text-purple-400 transition-colors"
-                        >
+                        <a href={selectedSpeaker.social.website} className="text-gray-300 hover:text-purple-400 transition-colors">
                           <Globe size={20} />
                         </a>
                       </div>

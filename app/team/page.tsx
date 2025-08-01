@@ -182,21 +182,6 @@ export default function TeamPage() {
             </p>
           </div>
 
-          <div className="mb-32">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center px-6 py-3 rounded-full glass-effect mb-6">
-                <Users className="text-blue-400 mr-2" size={20} />
-                <span className="text-white font-semibold">Core Team</span>
-              </div>
-              <h2 className="text-5xl font-bold text-white mb-6">
-                Driven by <span className="text-gradient">Passion</span>
-              </h2>
-              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                Meet the dedicated individuals who are making this event a reality through their expertise and
-                commitment.
-              </p>
-            </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
               {teamMembers.map((member) => (
                 <div
@@ -234,47 +219,7 @@ export default function TeamPage() {
               ))}
             </div>
 
-            <div className="glass-effect-strong p-12 rounded-3xl mb-20">
-              <h3 className="text-3xl font-bold text-white text-center mb-12">
-                Our <span className="text-gradient">Values</span>
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {[
-                  { emoji: "🚀", title: "Innovation", text: "We believe in pushing boundaries and creating solutions that make a real difference in the world." },
-                  { emoji: "🤝", title: "Collaboration", text: "Great things happen when diverse minds come together. We foster an environment of mutual respect and teamwork." },
-                  { emoji: "⭐", title: "Excellence", text: "We strive for excellence in everything we do, from event organization to participant experience." },
-                ].map((value, i) => (
-                  <div key={i} className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-white text-2xl">{value.emoji}</span>
-                    </div>
-                    <h4 className="text-xl font-bold text-white mb-3">{value.title}</h4>
-                    <p className="text-gray-300">{value.text}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center glass-effect-strong p-12 rounded-3xl">
-            <h2 className="text-4xl font-bold text-white mb-8">
-              Ready to <span className="text-gradient">Join</span> the Innovation?
-            </h2>
-            <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Don't miss this opportunity to work with our amazing team and be part of the most exciting ideathon of
-              2025.
-            </p>
-            <Button
-              asChild
-              size="lg"
-              className="btn-register btn-modern text-white px-16 py-6 rounded-full text-2xl font-bold"
-            >
-              <Link href="/register" className="flex items-center">
-                Register Now <ArrowRight className="ml-3" size={28} />
-              </Link>
-            </Button>
-          </div>
-
+            
           {selectedMember && (
             <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
               <div className="glass-effect-strong rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
