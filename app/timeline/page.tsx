@@ -199,7 +199,7 @@ export default function TimelinePage() {
 
   return (
     <div className="min-h-screen">
-      <section className="section-padding pt-32">
+      <section className="section-padding pt-40 md:pt-32">
         <div className="container-max">
           <div className="text-center max-w-4xl mx-auto mb-20">
             <h1 className="heading-xl">

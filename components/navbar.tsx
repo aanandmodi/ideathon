@@ -24,6 +24,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null) // State for hover effect
   const pathname = usePathname()
   const dropdownRef = useRef<HTMLDivElement | null>(null)
 
@@ -50,6 +51,11 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
+  const levitateStyle = (itemName: string) => ({
+    transform: hoveredItem === itemName ? "translateY(-2px)" : "translateY(0px)",
+    transition: "transform 0.3s ease-in-out",
+  })
+
   return (
     <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-6xl px-4">
       <div
@@ -68,8 +74,9 @@ export default function Navbar() {
               />
             </div>
             <div className="block">
-              <span className="text-white font-bold text-lg">Ecell Ignite</span>
-              <div className="text-xs text-muted">Ideathon 2025</div>
+              <span className="ideathon-title text-white font-bold text-lg">
+                Ideathon 4.0
+              </span>
             </div>
           </Link>
 
@@ -84,6 +91,9 @@ export default function Navbar() {
                     ? "text-white bg-white/10"
                     : "text-gray-300 hover:text-white hover:bg-white/5"
                 }`}
+                style={levitateStyle(item.name)}
+                onMouseEnter={() => setHoveredItem(item.name)}
+                onMouseLeave={() => setHoveredItem(null)}
               >
                 {item.name}
               </Link>
@@ -94,6 +104,9 @@ export default function Navbar() {
               <button
                 onClick={() => setDropdownOpen((prev) => !prev)}
                 className="flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all"
+                style={levitateStyle("knowMore")}
+                onMouseEnter={() => setHoveredItem("knowMore")}
+                onMouseLeave={() => setHoveredItem(null)}
               >
                 Know More <ChevronDown size={16} />
               </button>
@@ -113,7 +126,7 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* Register Button (desktop + tablet) */}
+            {/* Register Button (desktop + tablet) - EXCLUDED */}
             <Link
               href="/register"
               className="ml-4 relative group inline-block overflow-hidden rounded-full px-5 py-2 text-sm font-semibold text-white bg-gradient-to-br from-purple-600 via-blue-600 to-orange-200 shadow-md transition-transform duration-300 hover:-translate-y-1"
@@ -125,6 +138,7 @@ export default function Navbar() {
 
           {/* Mobile Register Button + Menu Toggle */}
           <div className="md:hidden flex items-center space-x-2 ml-auto">
+            {/* Register Button (mobile) - EXCLUDED */}
             <Link
               href="/register"
               className="relative group inline-block overflow-hidden rounded-full px-5 py-2 text-sm font-semibold text-white bg-gradient-to-br from-purple-600 via-blue-600 to-orange-200 shadow-md transition-transform duration-300 hover:-translate-y-1"
@@ -139,6 +153,9 @@ export default function Navbar() {
             <button
               onClick={() => setIsOpen((prev) => !prev)}
               className="text-white hover:text-primary transition-colors p-2"
+              style={levitateStyle("menuToggle")}
+              onMouseEnter={() => setHoveredItem("menuToggle")}
+              onMouseLeave={() => setHoveredItem(null)}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -149,21 +166,7 @@ export default function Navbar() {
         {isOpen && (
           <div className="md:hidden mt-4 pt-4 border-t border-white/10">
             <div className="grid grid-cols-2 gap-2">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 text-center ${
-                    pathname === item.href
-                      ? "text-white bg-white/10"
-                      : "text-gray-300 hover:text-white hover:bg-white/5"
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-              {aboutDropdownItems.map((item) => (
+              {[...navItems, ...aboutDropdownItems].map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}

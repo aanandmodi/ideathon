@@ -764,3 +764,9 @@
 .marquee-content {
   will-change: transform;
 }
+/* File: app/globals.css */
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500;
+  }
+}

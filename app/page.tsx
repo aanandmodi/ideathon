@@ -43,9 +43,7 @@ export default function HomePage() {
         <div className="container-max px-2 sm:px-4 md:px-8">
           <div className="text-center max-w-6xl mx-auto">
             <div className="mb-8">
-              <span className="inline-block px-6 py-3 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-lg font-medium mb-8">
-                🚀 Innovation Awaits - Join the Revolution
-              </span>
+              
             </div>
 
             {/* Fixed Ideathon 4.0 Title with Space */}

@@ -9,54 +9,54 @@ import { Button } from "@/components/ui/button"
 const teamMembers = [
   {
     id: 1,
-    name: "Arjun Sharma",
+    name: "Abhisekh Agrawal",
     role: "Event Director",
-    image: "/placeholder.svg?height=300&width=300&text=Arjun+Sharma",
+    image: "/placeholder.svg?height=300&width=300&text=Abhisekh+Agrawal",
     bio: "Final year Computer Science student with a passion for entrepreneurship and innovation. Leading the team with vision and dedication.",
     skills: ["Leadership", "Strategy", "Innovation"],
     social: {
       linkedin: "#",
       twitter: "#",
-      email: "arjun@ecellignite.in",
+      email: "abhisekh@ecellignite.in",
     },
   },
   {
     id: 2,
-    name: "Priya Patel",
+    name: "Parth Raval",
     role: "Operations Head",
-    image: "/placeholder.svg?height=300&width=300&text=Priya+Patel",
+    image: "/placeholder.svg?height=300&width=300&text=Parth+Raval",
     bio: "MBA student specializing in operations management and event coordination. Ensuring smooth execution of all event activities.",
     skills: ["Operations", "Management", "Coordination"],
     social: {
       linkedin: "#",
       twitter: "#",
-      email: "priya@ecellignite.in",
+      email: "parth@ecellignite.in",
     },
   },
   {
     id: 3,
-    name: "Rahul Gupta",
+    name: "Aanand Modi",
     role: "Technical Lead",
-    image: "/placeholder.svg?height=300&width=300&text=Rahul+Gupta",
+    image: "/placeholder.svg?height=300&width=300&text=Aanand+Modi",
     bio: "Software engineer with expertise in full-stack development and technical infrastructure. Building the tech backbone of the event.",
     skills: ["Full Stack", "DevOps", "Architecture"],
     social: {
       linkedin: "#",
       twitter: "#",
-      email: "rahul@ecellignite.in",
+      email: "aanand@ecellignite.in",
     },
   },
   {
     id: 4,
-    name: "Sneha Reddy",
+    name: "Rituraj Singh Deora",
     role: "Marketing Head",
-    image: "/placeholder.svg?height=300&width=300&text=Sneha+Reddy",
+    image: "/placeholder.svg?height=300&width=300&text=Rituraj+Singh+Deora",
     bio: "Digital marketing specialist focused on brand building and community engagement. Spreading the word about innovation.",
     skills: ["Digital Marketing", "Branding", "Social Media"],
     social: {
       linkedin: "#",
       twitter: "#",
-      email: "sneha@ecellignite.in",
+      email: "rituraj@ecellignite.in",
     },
   },
   {
@@ -170,7 +170,7 @@ export default function TeamPage() {
 
   return (
     <div className="min-h-screen">
-      <section className="section-padding pt-32">
+      <section className="section-padding pt-40 md:pt-32">
         <div className="container-max">
           <div className="text-center max-w-4xl mx-auto mb-20">
             <h1 className="heading-xl">

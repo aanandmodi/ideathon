@@ -152,7 +152,7 @@ export default function GlimpsesPage() {
     <div className="min-h-screen px-4 pt-32">
       <div className="max-w-7xl mx-auto">
         {/* Hero Section */}
-        <section className="text-center mb-20">
+        <section className="text-center mb-20"> 
           <h1 className="text-6xl md:text-7xl font-bold text-white mb-8 neon-text">
             Past <span className="text-gradient">Glimpses</span>
           </h1>

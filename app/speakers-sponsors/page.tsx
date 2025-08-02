@@ -66,8 +66,8 @@ const speakers = [
 ]
 
 const allSponsors = [
-    { name: "TechCorp Global", logo: "/placeholder.svg?height=100&width=250&text=TechCorp+Global", website: "#" },
-    { name: "InnovateLabs", logo: "/placeholder.svg?height=100&width=250&text=InnovateLabs", website: "#" },
+    { name: "Ahmedabad Signal Vadapav", logo: "/sponser1.png?height=200&width=350&text=TechCorp+Global", website: "#" },
+    { name: "Ahmedabad Mirror", logo: "/sponser2.png?height=100&width=250&text=InnovateLabs", website: "#" },
     { name: "StartupHub", logo: "/placeholder.svg?height=100&width=250&text=StartupHub", website: "#" },
     { name: "VentureCapital Pro", logo: "/placeholder.svg?height=100&width=250&text=VentureCapital+Pro", website: "#" },
     { name: "Future Systems", logo: "/placeholder.svg?height=100&width=250&text=Future+Systems", website: "#" },
@@ -89,26 +89,20 @@ const SponsorMarquee = ({ sponsors, speed = '80s' }: {
       >
         {/* Render logos twice for a seamless loop */}
         {[...sponsors, ...sponsors].map((sponsor, index) => (
-          <Link href={sponsor.website} key={index} target="_blank" className="flex-shrink-0 mx-4 p-1 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors duration-300">
-             <div className="relative glass-effect rounded-xl overflow-hidden p-6 group/item flex items-center justify-center">
-                <Image
-                  src={sponsor.logo}
-                  alt={`${sponsor.name} logo`}
-                  width={250}
-                  height={100}
-                  // Increased logo height from h-16 to h-20 for bigger tiles
-                  className="h-20 w-auto object-contain transition-all duration-300 filter grayscale group-hover/item:filter-none group-hover/item:scale-105"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement
-                    target.src = `/placeholder.svg?height=100&width=250&text=${encodeURIComponent(sponsor.name)}`
-                  }}
-                />
-                {/* Glowing Border Effect */}
-                <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover/item:border-purple-500/50 transition-all duration-300" style={{
-                    mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                    maskComposite: 'exclude'
-                }}></div>
-             </div>
+          // FIX 1: The 'group' class is named 'group/logo' to make it unique.
+          <Link href={sponsor.website} key={index} target="_blank" className="flex-shrink-0 mx-8 flex items-center justify-center group/logo">
+            <Image
+              src={sponsor.logo}
+              alt={`${sponsor.name} logo`}
+              width={250}
+              height={100}
+              // FIX 2: The hover effects now specifically target the 'group-hover/logo' state.
+              className="h-20 w-48 object-contain transition-all duration-300 filter grayscale group-hover/logo:filter-none group-hover/logo:scale-105"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement
+                target.src = `/placeholder.svg?height=100&width=250&text=${encodeURIComponent(sponsor.name)}`
+              }}
+            />
           </Link>
         ))}
       </div>
@@ -138,7 +132,7 @@ export default function SpeakersSponsorsPage() {
             <div className="text-center mb-16">
                <h2 className="text-4xl md:text-5xl font-bold text-white">
                 Meet Our <span className="text-gradient">Speakers</span>
-              </h2>
+               </h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
@@ -218,27 +212,7 @@ export default function SpeakersSponsorsPage() {
                 <SponsorMarquee sponsors={allSponsors} speed="80s" />
             </div>
           </div>
-
-          {/* Register Now CTA */}
-          <div className="text-center glass-effect-strong p-8 md:p-12 rounded-3xl mb-20">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
-              Ready to <span className="text-gradient">Learn</span> from the Best?
-            </h2>
-            <p className="text-lg md:text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Don't miss this opportunity to learn from industry leaders and connect with amazing sponsors. Register
-              now!
-            </p>
-            <Button
-              asChild
-              size="lg"
-              className="btn-register btn-modern text-white px-12 md:px-16 py-5 md:py-6 rounded-full text-lg md:text-xl font-bold"
-            >
-              <Link href="/register" className="flex items-center">
-                Register Now <ArrowRight className="ml-3" size={24} />
-              </Link>
-            </Button>
-          </div>
-
+          
           {/* Speaker Modal */}
           {selectedSpeaker && (
             <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
