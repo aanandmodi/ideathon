@@ -3,170 +3,286 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Linkedin, Twitter, Mail, X, Users, ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Linkedin, Instagram, Mail, X } from "lucide-react"
 
 const teamMembers = [
+  // First 10 are now Core Team
   {
     id: 1,
-    name: "Abhisekh Agrawal",
+    name: "Hitendrasinh Zala",
     role: "Event Director",
-    image: "/placeholder.svg?height=300&width=300&text=Abhisekh+Agrawal",
-    bio: "Final year Computer Science student with a passion for entrepreneurship and innovation. Leading the team with vision and dedication.",
-    skills: ["Leadership", "Strategy", "Innovation"],
+    image: "/Hitendra.jpg?height=300&width=300&text=Abhisekh+Agrawal",
+    bio: "Responsible for the overall planning, execution, and supervision of the ideathon.",
+    skills: ["Leadership", "Strategic Planning", "Event Management"],
     social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "abhisekh@ecellignite.in",
+      linkedin: "http://linkedin.com/in/hitendrasinhzala",
+      instagram: "https://www.instagram.com/ardnetih.__/",
+      email: "hitendrasinh2004@gmail.com",
     },
   },
   {
     id: 2,
-    name: "Parth Raval",
-    role: "Operations Head",
-    image: "/placeholder.svg?height=300&width=300&text=Parth+Raval",
-    bio: "MBA student specializing in operations management and event coordination. Ensuring smooth execution of all event activities.",
-    skills: ["Operations", "Management", "Coordination"],
+    name: "Abhishek Agarwal",
+    role: "Vice Convenor",
+    image: "/Abhishek.jpg?height=300&width=300&text=Parth+Raval",
+    bio: "Supports the Event Director and coordinates with team.",
+    skills: ["Team Coordination", "Operations", "Communication"],
     social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "parth@ecellignite.in",
+      linkedin: "https://www.linkedin.com/in/abhishekkkagarwal/",
+      instagram: "https://www.instagram.com/abhishek_ag.1108/",
+      email: "abhishek040478@gmail.com",
     },
   },
   {
     id: 3,
-    name: "Aanand Modi",
-    role: "Technical Lead",
-    image: "/placeholder.svg?height=300&width=300&text=Aanand+Modi",
-    bio: "Software engineer with expertise in full-stack development and technical infrastructure. Building the tech backbone of the event.",
-    skills: ["Full Stack", "DevOps", "Architecture"],
+    name: "Parth Raval",
+    role: "Vice Convenor",
+    image: "/Raval Parth.jpg?height=300&width=300&text=Aanand+Modi",
+    bio: "Manages daily operations and resolves issues during the event.",
+    skills: ["Operational Management", "Issue Resolution", "On-site Coordination"],
     social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "aanand@ecellignite.in",
+      linkedin: "https://www.linkedin.com/in/parth-raval-4583362bb/",
+      instagram: "https://www.instagram.com/parth_raval_25/?hl=en",
+      email: "ravalp682@gmail.com",
     },
   },
   {
     id: 4,
     name: "Rituraj Singh Deora",
-    role: "Marketing Head",
-    image: "/placeholder.svg?height=300&width=300&text=Rituraj+Singh+Deora",
-    bio: "Digital marketing specialist focused on brand building and community engagement. Spreading the word about innovation.",
-    skills: ["Digital Marketing", "Branding", "Social Media"],
+    role: "Corporate Relations Lead",
+    image: "/Rituraj.jpg?height=300&width=300&text=Rituraj+Singh+Deora",
+    bio: "Handles sponsorships, partnerships, and corporate communications.",
+    skills: ["Sponsorship Acquisition", "Partnership Building", "Negotiation"],
     social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "rituraj@ecellignite.in",
+      linkedin: "https://www.linkedin.com/in/rituraj-singh-deora-b8b002376/",
+      instagram: "https://www.instagram.com/deora.rituraj/",
+      email: "riturajsd25@gmail.com",
     },
   },
   {
     id: 5,
-    name: "Vikram Singh",
-    role: "Partnerships Lead",
-    image: "/placeholder.svg?height=300&width=300&text=Vikram+Singh",
-    bio: "Business development professional with experience in corporate partnerships. Building bridges with industry leaders.",
-    skills: ["Business Development", "Partnerships", "Networking"],
+    name: "Aanand Modi",
+    role: "Technical head",
+    image: "/Aanand.jpg?height=300&width=300&text=Vikram+Singh",
+    bio: "Manages the website, registration system, and all technical tools.",
+    skills: ["Web Development", "System Administration", "Technical Support"],
     social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "vikram@ecellignite.in",
+      linkedin: "https://www.linkedin.com/in/aanand-modi-648687353/",
+      instagram: "https://www.instagram.com/_aanand16_/",
+      email: "aanandmodi09@gmail.com",
     },
   },
   {
     id: 6,
-    name: "Ananya Joshi",
-    role: "Design Head",
-    image: "/placeholder.svg?height=300&width=300&text=Ananya+Joshi",
-    bio: "UI/UX designer passionate about creating beautiful and functional user experiences. Crafting the visual identity of the event.",
-    skills: ["UI/UX Design", "Branding", "Creative Direction"],
+    name: "Kunjal Bhavsar",
+    role: "Social Media Lead",
+    image: "/kunjal.jpeg?height=300&width=300&text=Ananya+Joshi",
+    bio: "Oversees event promotion and engagement on social platforms.",
+    skills: ["Social Media Strategy", "Content Creation", "Community Engagement"],
     social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "ananya@ecellignite.in",
+      linkedin: "https://www.linkedin.com/in/kunjal-bhavsar-84568331b",
+      instagram: "https://www.instagram.com/kunjal_bhavsar_/",
+      email: "kbbhavsar1234@gmail.com",
     },
   },
   {
     id: 7,
-    name: "Karthik Nair",
-    role: "Content Lead",
-    image: "/placeholder.svg?height=300&width=300&text=Karthik+Nair",
+    name: "Mansi Sharma",
+    role: "Content & Copywriting",
+    image: "/Mansi.jpg?height=300&width=300&text=Karthik+Nair",
     bio: "Content strategist and writer with a knack for storytelling and brand communication. Telling the story of innovation.",
-    skills: ["Content Strategy", "Writing", "Storytelling"],
+    skills: ["Content Strategy", "Copywriting", "Storytelling"],
     social: {
-      linkedin: "#",
-      twitter: "#",
+      linkedin: "https://www.linkedin.com/in/mansi-sharma-52136b30a",
+      instagram: "https://www.instagram.com/mansi.bs_04/",
       email: "karthik@ecellignite.in",
     },
   },
   {
     id: 8,
-    name: "Meera Agarwal",
-    role: "Finance Head",
-    image: "/placeholder.svg?height=300&width=300&text=Meera+Agarwal",
-    bio: "Finance professional ensuring transparent and efficient budget management. Managing resources for maximum impact.",
-    skills: ["Finance", "Budget Management", "Analytics"],
+    name: "Arpita Motwani",
+    role: "Marketing Head",
+    image: "/Arpita.jpg?height=300&width=300&text=Meera+Agarwal",
+    bio: "Designs branding strategies and promotional campaigns for the event.",
+    skills: ["Marketing Strategy", "Brand Management", "Campaign Planning"],
     social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "meera@ecellignite.in",
+      linkedin: "https://www.linkedin.com/in/arpita-motwani/",
+      instagram: "https://www.instagram.com/arpita._.motwani/",
+      email: "motwaniarpita0@gmail.com",
     },
   },
   {
     id: 9,
-    name: "Ritika Mehta",
-    role: "Outreach Coordinator",
-    image: "/placeholder.svg?height=300&width=300&text=Ritika+Mehta",
-    bio: "Energetic outreach specialist passionate about connecting communities and driving student engagement through creative initiatives.",
-    skills: ["Outreach", "Communication", "Networking"],
+    name: "Dhruvil Barot",
+    role: "Marketing Head",
+    image: "/Dhruvil.jpg?height=300&width=300&text=Meera+Agarwal",
+    bio: "Coordinates research and development of problem statements and innovation ideas.",
+    skills: ["Market Research", "Campaign Coordination", "Lead Generation"],
     social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "ritika@ecellignite.in",
+      linkedin: "http://www.linkedin.com/in/barot-dhruvil-b64572317/",
+      instagram: "https://www.instagram.com/dhruvil_barot.0355",
+      email: "barotdhruvilc@gmail.com",
     },
   },
   {
     id: 10,
-    name: "Aditya Verma",
-    role: "Logistics Head",
-    image: "/placeholder.svg?height=300&width=300&text=Aditya+Verma",
-    bio: "Detail-oriented logistics planner ensuring smooth movement of resources and seamless execution of physical arrangements.",
-    skills: ["Logistics", "Planning", "Time Management"],
+    name: "Jayesh Dhanwani",
+    role: "Logistics Lead",
+    image: "/Jayesh.jpg?height=300&width=300&text=Meera+Agarwal",
+    bio: "Manages venue setup, resources, and on‑ground arrangements.",
+    skills: ["Logistics Planning", "Venue Management", "Resource Allocation"],
     social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "aditya@ecellignite.in",
+      linkedin: "https://www.linkedin.com/in/jayesh-dhanwani-52a2382ab/",
+      instagram: "https://www.instagram.com/dhanwani182/",
+      email: "jayeshdhanwani558@gmail.com",
     },
   },
+  // Other Members
   {
     id: 11,
-    name: "Tanya Bansal",
-    role: "PR & Media Head",
-    image: "/placeholder.svg?height=300&width=300&text=Tanya+Bansal",
-    bio: "Public relations enthusiast crafting compelling narratives and managing media coverage to boost event visibility.",
-    skills: ["Public Relations", "Media Management", "Storytelling"],
+    name: "Pratham Patel",
+    role: "Core member",
+    image: "/pratham.jpeg?height=300&width=300&text=Tanya+Bansal",
+    skills: ["Public Relations", "Media Outreach", "Team Collaboration"],
     social: {
-      linkedin: "#",
-      twitter: "#",
+      linkedin: "https://www.linkedin.com/in/pratham-patel-2978042ab",
+      instagram: "https://www.linkedin.com/in/pratham-patel-2978042ab",
       email: "tanya@ecellignite.in",
     },
   },
   {
     id: 12,
-    name: "Nikhil Deshmukh",
-    role: "Volunteer Coordinator",
-    image: "/placeholder.svg?height=300&width=300&text=Nikhil+Deshmukh",
-    bio: "Team player managing and mentoring volunteers to ensure enthusiastic participation and efficient task execution.",
-    skills: ["Team Management", "Mentoring", "Coordination"],
+    name: "Priyasingh Rajput",
+    role: "Treasurer",
+    image: "/Priya.jpg?height=300&width=300&text=Nikhil+Deshmukh",
+    bio: "Prepares the budget, manages funds, and maintains financial records.",
+    skills: ["Budgeting", "Financial Management", "Record Keeping"],
+    social: {
+      linkedin: "https://www.linkedin.com/in/priyaa-singh-439638375",
+      instagram: "https://www.instagram.com/prriiiyyaaa_/?hl=en",
+      email: "Priyaasinghh81@gmail.com",
+    },
+  },
+  {
+    id: 13,
+    name: "Vanshika Prajapati",
+    role: "Host Coordinator",
+    image: "/Vanshika.jpg?height=300&width=300&text=Priya+Sharma",
+    bio: "Coordinates anchors across different sessions.",
+    skills: ["Anchor Coordination", "Stage Management", "Public Speaking"],
+    social: {
+      linkedin: "https://www.linkedin.com/in/vanshika-prajapati-25272431b",
+      instagram: "https://www.instagram.com/vanshiiikaaa_20/",
+      email: "Vanshikadevendraprajapati@gmail.com",
+    },
+  },
+  {
+    id: 14,
+    name: "Rashid Mirza",
+    role: "Hospitality Lead",
+    image: "/Rashid Mirza.jpg?height=300&width=300&text=Rohan+Gupta",
+    bio: "Takes care of arrangements for judges, guests, and speakers.",
+    skills: ["Guest Relations", "Hospitality Management", "VIP Handling"],
+    social: {
+      linkedin: "https://www.linkedin.com/in/rashid-mirza-8b4858275/",
+      instagram: "https://www.instagram.com/rashid_mirza007/",
+      email: "ra1277121@gmail.com",
+    },
+  },
+  {
+    id: 15,
+    name: "Riya Chawla",
+    role: "Host Coordinator",
+    image: "/riya.jpeg?height=300&width=300&text=Sneha+Patel",
+    bio: "Coordinates anchors and ensures smooth stage flow during sessions.",
+    skills: ["Event Anchoring", "Stage Coordination", "Script Management"],
+    social: {
+      linkedin: "https://www.linkedin.com/in/riya-chawla-aba3bb239/",
+      instagram: "https://www.instagram.com/_.ohhthtsriaa._/",
+      email: "sneha@ecellignite.in",
+    },
+  },
+  {
+    id: 16,
+    name: "Niharika Vaishnav",
+    role: "Host Coordinator",
+    image: "/Niharika.jpg?height=300&width=300&text=Arjun+Reddy",
+    bio: "Coordinates anchors and ensures smooth stage flow during sessions.",
+    skills: ["Event Anchoring", "Stage Coordination", "Script Management"],
+    social: {
+      linkedin: "https://www.linkedin.com/in/niharika-vaishnav-8a1916316",
+      instagram: "https://www.instagram.com/niiharikaa11/",
+      email: "NiharikaVv06@gmail.com",
+    },
+  },
+  {
+    id: 17,
+    name: "Pallav Choudhary",
+    role: "Host Coordinator",
+    image: "/pallav.jpg?height=300&width=300&text=Fatima+Khan",
+    bio: "Provides backup support for anchoring and event flow management",
+    skills: ["Event Support", "Backup Anchoring", "Flow Management"],
     social: {
       linkedin: "#",
-      twitter: "#",
-      email: "nikhil@ecellignite.in",
+      instagram: "https://www.instagram.com/pallav__choudhary_/",
+      email: "pallavchoudhary809@gmail.com",
+    },
+  },
+  {
+    id: 18,
+    name: "Vyom Dave",
+    role: "Social Media Lead",
+    image: "/Vyom.JPG?height=300&width=300&text=David+D'souza",
+    bio: "Creates engaging content and boosts reach on social platforms.",
+    skills: ["Content Creation", "Social Media Marketing", "Audience Growth"],
+    social: {
+      linkedin: "https://www.linkedin.com/in/vyom-dave-7b357a378",
+      instagram: "https://www.instagram.com/thevyomdave/",
+      email: "vyomdave021@gmail.com",
     },
   },
 ]
 
 export default function TeamPage() {
   const [selectedMember, setSelectedMember] = useState<(typeof teamMembers)[0] | null>(null)
+
+  // Separate the members into a core team of 10 and 8 other members
+  const coreTeam = teamMembers.slice(0, 10)
+  const otherMembers = teamMembers.slice(10)
+
+  const MemberCard = ({ member }: { member: (typeof teamMembers)[0] }) => (
+    <div
+      className="glass-effect-strong rounded-3xl overflow-hidden hover-glow cursor-pointer group"
+      onClick={() => setSelectedMember(member)}
+    >
+      <div className="relative">
+        <Image
+          src={member.image || "/placeholder.svg"}
+          alt={member.name}
+          width={300}
+          height={300}
+          className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement
+            target.src = `/placeholder.svg?height=300&width=300&text=${encodeURIComponent(member.name)}`
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      </div>
+      <div className="p-6">
+        <h3 className="text-xl font-bold text-white mb-2">{member.name}</h3>
+        <p className="text-blue-400 font-semibold mb-1">{member.role}</p>
+        <p className="text-gray-300 text-sm mb-4 leading-relaxed line-clamp-2">{member.bio}</p>
+        <div className="flex flex-wrap gap-2">
+          {member.skills.slice(0, 2).map((skill, index) => (
+            <span key={index} className="px-3 py-1 bg-purple-500/20 text-purple-300 text-xs rounded-full">
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
 
   return (
     <div className="min-h-screen">
@@ -182,44 +298,30 @@ export default function TeamPage() {
             </p>
           </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-              {teamMembers.map((member) => (
-                <div
-                  key={member.id}
-                  className="glass-effect-strong rounded-3xl overflow-hidden hover-glow cursor-pointer group"
-                  onClick={() => setSelectedMember(member)}
-                >
-                  <div className="relative">
-                    <Image
-                      src={member.image || "/placeholder.svg"}
-                      alt={member.name}
-                      width={300}
-                      height={300}
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement
-                        target.src = `/placeholder.svg?height=300&width=300&text=${encodeURIComponent(member.name)}`
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-white mb-2">{member.name}</h3>
-                    <p className="text-blue-400 font-semibold mb-1">{member.role}</p>
-                    <p className="text-gray-300 text-sm mb-4 leading-relaxed line-clamp-2">{member.bio}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {member.skills.slice(0, 2).map((skill, index) => (
-                        <span key={index} className="px-3 py-1 bg-purple-500/20 text-purple-300 text-xs rounded-full">
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+          {/* Core Team Section */}
+          <div className="mb-24">
+            <h2 className="heading-lg text-center mb-12">
+              Our <span className="text-gradient">Core Team</span>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {coreTeam.map((member) => (
+                <MemberCard key={member.id} member={member} />
               ))}
             </div>
+          </div>
 
-            
+          {/* Other Members Section */}
+          <div>
+            <h2 className="heading-lg text-center mb-12">
+              Our <span className="text-gradient">Esteemed Members</span>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+              {otherMembers.map((member) => (
+                <MemberCard key={member.id} member={member} />
+              ))}
+            </div>
+          </div>
+          
           {selectedMember && (
             <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
               <div className="glass-effect-strong rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -254,8 +356,8 @@ export default function TeamPage() {
                         <a href={selectedMember.social.linkedin} className="text-gray-300 hover:text-purple-400 transition-colors">
                           <Linkedin size={20} />
                         </a>
-                        <a href={selectedMember.social.twitter} className="text-gray-300 hover:text-purple-400 transition-colors">
-                          <Twitter size={20} />
+                        <a href={selectedMember.social.instagram} className="text-gray-300 hover:text-purple-400 transition-colors">
+                          <Instagram size={20} />
                         </a>
                         <a href={`mailto:${selectedMember.social.email}`} className="text-gray-300 hover:text-purple-400 transition-colors">
                           <Mail size={20} />
