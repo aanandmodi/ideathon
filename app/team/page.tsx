@@ -23,7 +23,7 @@ const teamMembers = [
   {
     id: 2,
     name: "Abhishek Agarwal",
-    role: "Vice Convenor",
+    role: "Event cordinator",
     image: "/Abhishek.jpg?height=300&width=300&text=Parth+Raval",
     bio: "Supports the Event Director and coordinates with team.",
     skills: ["Team Coordination", "Operations", "Communication"],
@@ -36,20 +36,20 @@ const teamMembers = [
   {
     id: 3,
     name: "Parth Raval",
-    role: "Vice Convenor",
+    role: "Event cordinator",
     image: "/Raval Parth.jpg?height=300&width=300&text=Aanand+Modi",
     bio: "Manages daily operations and resolves issues during the event.",
     skills: ["Operational Management", "Issue Resolution", "On-site Coordination"],
     social: {
       linkedin: "https://www.linkedin.com/in/parth-raval-4583362bb/",
-      instagram: "https://www.instagram.com/parth_raval_25/?hl=en",
+      instagram: "https://www.instagram.com/parth_raval_50/?hl=en",
       email: "ravalp682@gmail.com",
     },
   },
   {
     id: 4,
     name: "Rituraj Singh Deora",
-    role: "Corporate Relations Lead",
+    role: "Corporate Relations head",
     image: "/Rituraj.jpg?height=300&width=300&text=Rituraj+Singh+Deora",
     bio: "Handles sponsorships, partnerships, and corporate communications.",
     skills: ["Sponsorship Acquisition", "Partnership Building", "Negotiation"],
@@ -154,7 +154,7 @@ const teamMembers = [
   {
     id: 12,
     name: "Priyasingh Rajput",
-    role: "Treasurer",
+    role: "treasurer",
     image: "/Priya.jpg?height=300&width=300&text=Nikhil+Deshmukh",
     bio: "Prepares the budget, manages funds, and maintains financial records.",
     skills: ["Budgeting", "Financial Management", "Record Keeping"],
