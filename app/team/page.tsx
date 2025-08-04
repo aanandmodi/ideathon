@@ -302,7 +302,7 @@ export default function TeamPage() {
           {/* Core Team Section */}
           <div className="mb-24">
             <h2 className="heading-lg text-center mb-12">
-              Our <span className="text-gradient">Core Team</span>
+              Our <span className="text-gradient">Organising Team</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {coreTeam.map((member) => (

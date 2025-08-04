@@ -17,6 +17,7 @@ const aboutDropdownItems = [
   { name: "Glimpse", href: "/glimpses" },
   { name: "Speakers & Sponsors", href: "/speakers-sponsors" },
   { name: "Team", href: "/team" },
+   {name: "Contact us", href:"/contact"},
   { name: "About Page", href: "/about" },
 ]
 
