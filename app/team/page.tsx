@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState } from "react" // Fragment is no longer needed
 import Image from "next/image"
 import Link from "next/link"
 import { Linkedin, Instagram, Mail, X } from "lucide-react"
@@ -247,13 +247,9 @@ const teamMembers = [
 export default function TeamPage() {
   const [selectedMember, setSelectedMember] = useState<(typeof teamMembers)[0] | null>(null)
 
-  // Separate the members into a core team of 10 and 8 other members
-  const coreTeam = teamMembers.slice(0, 10)
-  const otherMembers = teamMembers.slice(10)
-
   const MemberCard = ({ member }: { member: (typeof teamMembers)[0] }) => (
     <div
-      className="glass-effect-strong rounded-3xl overflow-hidden hover-glow cursor-pointer group"
+      className="glass-effect-strong rounded-3xl overflow-hidden hover-glow cursor-pointer group h-full flex flex-col"
       onClick={() => setSelectedMember(member)}
     >
       <div className="relative">
@@ -270,11 +266,11 @@ export default function TeamPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
-      <div className="p-6">
+      <div className="p-6 flex flex-col flex-grow">
         <h3 className="text-xl font-bold text-white mb-2">{member.name}</h3>
         <p className="text-blue-400 font-semibold mb-1">{member.role}</p>
-        <p className="text-gray-300 text-sm mb-4 leading-relaxed line-clamp-2">{member.bio}</p>
-        <div className="flex flex-wrap gap-2">
+        <p className="text-gray-300 text-sm mb-4 leading-relaxed line-clamp-2 flex-grow">{member.bio}</p>
+        <div className="flex flex-wrap gap-2 mt-auto">
           {member.skills.slice(0, 2).map((skill, index) => (
             <span key={index} className="px-3 py-1 bg-purple-500/20 text-purple-300 text-xs rounded-full">
               {skill}
@@ -299,30 +295,18 @@ export default function TeamPage() {
             </p>
           </div>
 
-          {/* Core Team Section */}
           <div className="mb-24">
             <h2 className="heading-lg text-center mb-12">
-              Our <span className="text-gradient">Organising Team</span>
+              Our <span className="text-gradient">  Team</span>
             </h2>
+            {/* MODIFICATION: The grid now renders all members continuously without any separators. */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {coreTeam.map((member) => (
+              {teamMembers.map((member) => (
                 <MemberCard key={member.id} member={member} />
               ))}
             </div>
           </div>
 
-          {/* Other Members Section */}
-          <div>
-            <h2 className="heading-lg text-center mb-12">
-              Our <span className="text-gradient">Esteemed Members</span>
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-              {otherMembers.map((member) => (
-                <MemberCard key={member.id} member={member} />
-              ))}
-            </div>
-          </div>
-          
           {selectedMember && (
             <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
               <div className="glass-effect-strong rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -344,7 +328,9 @@ export default function TeamPage() {
                         className="w-full h-48 md:h-auto object-cover rounded-2xl"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement
-                          target.src = `/placeholder.svg?height=200&width=200&text=${encodeURIComponent(selectedMember.name)}`
+                          target.src = `/placeholder.svg?height=200&width=200&text=${encodeURIComponent(
+                            selectedMember.name
+                          )}`
                         }}
                       />
                     </div>
@@ -354,13 +340,22 @@ export default function TeamPage() {
                       <p className="text-blue-400 font-semibold mb-4">{selectedMember.role}</p>
 
                       <div className="flex space-x-4 mb-6">
-                        <a href={selectedMember.social.linkedin} className="text-gray-300 hover:text-purple-400 transition-colors">
+                        <a
+                          href={selectedMember.social.linkedin}
+                          className="text-gray-300 hover:text-purple-400 transition-colors"
+                        >
                           <Linkedin size={20} />
                         </a>
-                        <a href={selectedMember.social.instagram} className="text-gray-300 hover:text-purple-400 transition-colors">
+                        <a
+                          href={selectedMember.social.instagram}
+                          className="text-gray-300 hover:text-purple-400 transition-colors"
+                        >
                           <Instagram size={20} />
                         </a>
-                        <a href={`mailto:${selectedMember.social.email}`} className="text-gray-300 hover:text-purple-400 transition-colors">
+                        <a
+                          href={`mailto:${selectedMember.social.email}`}
+                          className="text-gray-300 hover:text-purple-400 transition-colors"
+                        >
                           <Mail size={20} />
                         </a>
                       </div>
@@ -371,7 +366,10 @@ export default function TeamPage() {
                         <h3 className="text-white font-semibold mb-3">Skills</h3>
                         <div className="flex flex-wrap gap-2">
                           {selectedMember.skills.map((skill, index) => (
-                            <span key={index} className="px-3 py-1 bg-purple-500/20 text-purple-300 text-sm rounded-full">
+                            <span
+                              key={index}
+                              className="px-3 py-1 bg-purple-500/20 text-purple-300 text-sm rounded-full"
+                            >
                               {skill}
                             </span>
                           ))}
