@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, Fragment } from "react" // Import Fragment
+import { useState } from "react" // Fragment is no longer needed
 import Image from "next/image"
 import Link from "next/link"
 import { Linkedin, Instagram, Mail, X } from "lucide-react"
@@ -299,21 +299,10 @@ export default function TeamPage() {
             <h2 className="heading-lg text-center mb-12">
               Our <span className="text-gradient">Dynamic Team</span>
             </h2>
-            {/* MODIFICATION: Grid classes adjusted for a uniform 3-column layout on large screens */}
+            {/* MODIFICATION: The grid now renders all members continuously without any separators. */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {teamMembers.map((member, index) => (
-                // MODIFICATION: Use React Fragment to group the card and the conditional separator
-                <Fragment key={member.id}>
-                  {/* The MemberCard is now directly a grid item, ensuring consistent sizing */}
-                  <MemberCard member={member} />
-
-                  {/* MODIFICATION: Add a separator after the 10th member (index 9) */}
-                  {index === 9 && (
-                    <div className="col-span-full py-6">
-                      <hr className="border-t border-white/10" />
-                    </div>
-                  )}
-                </Fragment>
+              {teamMembers.map((member) => (
+                <MemberCard key={member.id} member={member} />
               ))}
             </div>
           </div>

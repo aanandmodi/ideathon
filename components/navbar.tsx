@@ -1,11 +1,13 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X, ChevronDown } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { motion, AnimatePresence } from "framer-motion"
+import { Menu, X, ChevronDown, ArrowRight } from "lucide-react" // Ensured ArrowRight is here
+import styled from 'styled-components';
 
+// --- Data for Navigation ---
 const navItems = [
   { name: "Home", href: "/" },
   { name: "Challenges", href: "/challenges" },
@@ -17,174 +19,267 @@ const aboutDropdownItems = [
   { name: "Glimpse", href: "/glimpses" },
   { name: "Speakers & Sponsors", href: "/speakers-sponsors" },
   { name: "Team", href: "/team" },
-   {name: "Contact us", href:"/contact"},
+  { name: "Contact us", href: "/contact" },
   { name: "About Page", href: "/about" },
 ]
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [dropdownOpen, setDropdownOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null) // State for hover effect
-  const pathname = usePathname()
-  const dropdownRef = useRef<HTMLDivElement | null>(null)
+// --- SVG FILTER FOR GOOEY EFFECT (Re-added) ---
+const GooeyFilter = () => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style={{ display: 'none' }}>
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+          <feBlend in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
+  );
+};
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (typeof window !== "undefined") {
-        setScrolled(window.scrollY > 20)
+// --- NEW: Gooey Gradient Register Button ---
+const generateBlobStyles = (numOfBlobs: number) => {
+  let styles = '';
+  for (let i = 1; i <= numOfBlobs; i++) {
+    // Distributes blobs across the button width
+    styles += `
+      &:nth-child(${i}) {
+        left: ${(i - 1) * (100 / numOfBlobs)}%;
+        transition-delay: ${(i - 1) * 0.08}s;
+      }
+    `;
+  }
+  return styles;
+};
+
+const Blob = styled.span`
+  position: absolute;
+  top: 1px;
+  width: 25%; // Each blob is a quarter of the button's width
+  height: 100%;
+  background: #47d6e8; // Using the lighter color from the gradient for the wave
+  border-radius: 100%;
+  transform: translate3d(0, 150%, 0) scale(1.7);
+  transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+  
+  @supports(filter: url('#goo')) {
+    transform: translate3d(0, 150%, 0) scale(1.4);
+  }
+
+  ${() => generateBlobStyles(4)}
+`;
+
+const BlobsContainer = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  filter: url('#goo');
+  overflow: hidden; // Ensures blobs don't spill out before animation
+  border-radius: 9999px;
+`;
+
+const StyledGooeyButton = styled.a<{ $scrolled: boolean }>`
+  z-index: 1;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Space between text and arrow */
+  padding: ${props => props.$scrolled ? '10px 24px' : '14px 32px'};
+  margin: 0;
+  
+  font-size: 16px;
+  font-weight: 600; /* semibold */
+  color: white;
+  
+  background-image: linear-gradient(to right, #6b5aed, #47d6e8);
+  border: none;
+  border-radius: 9999px; /* pill shape */
+  
+  overflow: hidden; // Crucial for containing the effect
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+
+  /* The visible text and icon container */
+  .button-text {
+    z-index: 2; // Keep text above the gooey effect
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 25px rgba(71, 214, 232, 0.5);
+
+    ${Blob} {
+      transform: translateZ(0) scale(1.7);
+      @supports(filter: url('#goo')) {
+        transform: translate3d(0, 75%, 0) scale(1.4);
       }
     }
+  }
+`;
+
+const RegisterButton = ({ scrolled }: { scrolled: boolean }) => {
+  const numOfBlobs = 4;
+  return (
+    <Link href="/register" passHref legacyBehavior>
+      <StyledGooeyButton $scrolled={scrolled}>
+        <span className="button-text">
+          Register Now
+          <ArrowRight size={20} />
+        </span>
+        <BlobsContainer>
+          {[...Array(numOfBlobs)].map((_, i) => ( <Blob key={i} /> ))}
+        </BlobsContainer>
+      </StyledGooeyButton>
+    </Link>
+  );
+};
+
+
+// --- Main Navbar Component ---
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setDropdownOpen(false)
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+    document.body.style.overflow = isOpen ? "hidden" : "auto"
+    return () => { document.body.style.overflow = "auto" }
+  }, [isOpen])
 
-  const levitateStyle = (itemName: string) => ({
-    transform: hoveredItem === itemName ? "translateY(-2px)" : "translateY(0px)",
-    transition: "transform 0.3s ease-in-out",
-  })
+  const navBackgroundClass = scrolled ? 'bg-black/10 backdrop-blur-lg' : 'bg-transparent'
 
   return (
-    <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-6xl px-4">
-      <div
-        className={`navbar-modern px-6 py-3 transition-all duration-300 ${
-          scrolled ? "scale-95" : "scale-100"
-        }`}
+    <>
+      {/* ADD THE GOOEY FILTER SOMEWHERE IN THE RENDERED OUTPUT */}
+      <GooeyFilter />
+
+      {/* --- DESKTOP NAVBAR --- */}
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5, ease: "circOut" }}
+        className={`fixed top-0 left-0 right-0 z-50 hidden md:block transition-colors duration-300 ${navBackgroundClass}`}
       >
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl overflow-hidden">
-              <img
-                src="/logo.png"
-                alt="E-Cell Ignite Logo"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="block">
-              <span className="ideathon-title text-white font-bold text-lg">
-                Ideathon 4.0
-              </span>
-            </div>
-          </Link>
-
-          {/* Right-Aligned Nav and Register Button (Desktop/Tablet) */}
-          <div className="hidden md:flex items-center space-x-1 ml-auto">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  pathname === item.href
-                    ? "text-white bg-white/10"
-                    : "text-gray-300 hover:text-white hover:bg-white/5"
-                }`}
-                style={levitateStyle(item.name)}
-                onMouseEnter={() => setHoveredItem(item.name)}
-                onMouseLeave={() => setHoveredItem(null)}
-              >
-                {item.name}
-              </Link>
-            ))}
-
-            {/* Know More Dropdown */}
-            <div className="relative" ref={dropdownRef}>
-              <button
-                onClick={() => setDropdownOpen((prev) => !prev)}
-                className="flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all"
-                style={levitateStyle("knowMore")}
-                onMouseEnter={() => setHoveredItem("knowMore")}
-                onMouseLeave={() => setHoveredItem(null)}
-              >
-                Know More <ChevronDown size={16} />
-              </button>
-              {dropdownOpen && (
-                <div className="absolute top-full mt-2 w-48 bg-white/10 backdrop-blur border border-white/10 text-white rounded-xl overflow-hidden shadow-lg transition-all duration-300">
-                  {aboutDropdownItems.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="block px-4 py-2 text-sm hover:bg-white/5 transition-colors"
-                      onClick={() => setDropdownOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Register Button (desktop + tablet) - EXCLUDED */}
-            <Link
-              href="/register"
-              className="ml-4 relative group inline-block overflow-hidden rounded-full px-5 py-2 text-sm font-semibold text-white bg-gradient-to-br from-purple-600 via-blue-600 to-orange-200 shadow-md transition-transform duration-300 hover:-translate-y-1"
-            >
-              <span className="relative z-10">Register Now</span>
-              <span className="absolute -inset-1 before:content-[''] before:absolute before:inset-0 before:bg-white/40 before:transform before:-translate-x-full group-hover:before:translate-x-full before:rotate-45 before:transition-transform before:duration-700 before:blur-sm z-0"></span>
-            </Link>
-          </div>
-
-          {/* Mobile Register Button + Menu Toggle */}
-          <div className="md:hidden flex items-center space-x-2 ml-auto">
-            {/* Register Button (mobile) - EXCLUDED */}
-            <Link
-              href="/register"
-              className="relative group inline-block overflow-hidden rounded-full px-5 py-2 text-sm font-semibold text-white bg-gradient-to-br from-purple-600 via-blue-600 to-orange-200 shadow-md transition-transform duration-300 hover:-translate-y-1"
-            >
-              <span className="relative z-10">
-                <span className="block md:hidden">Register</span>
-                <span className="hidden md:block">Register Now</span>
-              </span>
-              <span className="absolute -inset-1 before:content-[''] before:absolute before:inset-0 before:bg-white/40 before:transform before:-translate-x-full group-hover:before:translate-x-full before:rotate-45 before:transition-transform before:duration-700 before:blur-sm z-0"></span>
-            </Link>
-
-            <button
-              onClick={() => setIsOpen((prev) => !prev)}
-              className="text-white hover:text-primary transition-colors p-2"
-              style={levitateStyle("menuToggle")}
-              onMouseEnter={() => setHoveredItem("menuToggle")}
-              onMouseLeave={() => setHoveredItem(null)}
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+        <div className={`container mx-auto flex items-center justify-between transition-all duration-300 ${scrolled ? 'p-2' : 'p-4'}`}>
+          <Logo scrolled={scrolled} />
+          <DesktopNavLinks pathname={pathname} />
+          <RegisterButton scrolled={scrolled} />
         </div>
+      </motion.nav>
 
-        {/* Mobile Nav Panel */}
-        {isOpen && (
-          <div className="md:hidden mt-4 pt-4 border-t border-white/10">
-            <div className="grid grid-cols-2 gap-2">
-              {[...navItems, ...aboutDropdownItems].map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 text-center ${
-                    pathname === item.href
-                      ? "text-white bg-white/10"
-                      : "text-gray-300 hover:text-white hover:bg-white/5"
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </nav>
+      {/* --- MOBILE NAVBAR --- */}
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5, ease: "circOut" }}
+        className={`fixed top-0 left-0 right-0 z-50 md:hidden transition-colors duration-300 ${navBackgroundClass}`}
+      >
+        <div className="flex items-center justify-between p-4">
+            <Logo scrolled={false} />
+            <motion.button whileTap={{ scale: 0.9 }} onClick={() => setIsOpen(!isOpen)} className="text-white p-2 z-10">
+             {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </motion.button>
+        </div>
+      </motion.nav>
+      
+      {/* --- MOBILE MENU PANEL --- */}
+      <AnimatePresence>
+        {isOpen && <MobileMenuPanel setIsOpen={setIsOpen} pathname={pathname} />}
+      </AnimatePresence>
+    </>
   )
 }
+
+// --- Other Sub-components (unchanged) ---
+const Logo = ({ scrolled }: { scrolled: boolean }) => (
+    <Link href="/" className="flex items-center gap-3 flex-shrink-0">
+        <motion.img whileHover={{ rotate: -15, scale: 1.1 }} src="/logo.png" alt="Ideathon Logo" 
+            className={`rounded-full transition-all duration-300 ${scrolled ? 'h-8 w-8' : 'h-10 w-10'}`} />
+        <span className={`font-bold text-white tracking-tight transition-all duration-300 ${scrolled ? 'text-lg' : 'text-xl'}`}>
+            Ideathon 4.0
+        </span>
+    </Link>
+);
+
+const DesktopNavLinks = ({ pathname }: { pathname: string }) => {
+    const [hoveredItem, setHoveredItem] = useState<string | null>(pathname);
+    useEffect(() => { setHoveredItem(pathname); }, [pathname]);
+    return (
+      <div className="absolute left-1/2 -translate-x-1/2 flex items-center bg-white/10 p-1 rounded-full border border-white/20 backdrop-blur-sm">
+        {navItems.map((item) => (
+          <Link key={item.href} href={item.href} onMouseEnter={() => setHoveredItem(item.href)}
+            className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 ${hoveredItem === item.href || pathname === item.href ? "text-white" : "text-zinc-300 hover:text-white"}`}>
+            {item.name}
+            {hoveredItem === item.href && (<motion.div layoutId="pill" className="absolute inset-0 bg-white/20 rounded-full -z-10" transition={{ type: "spring", stiffness: 350, damping: 30 }}/>)}
+          </Link>
+        ))}
+        <DropdownMenu onHoverChange={setHoveredItem} currentHover={hoveredItem} />
+      </div>
+    );
+};
+
+const dropdownVariants = { hidden: { opacity: 0, scale: 0.98, y: -10 }, visible: { opacity: 1, scale: 1, y: 0, transition: { staggerChildren: 0.06, duration: 0.2 } }};
+const itemVariants = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 }};
+const DropdownMenu = ({ onHoverChange, currentHover }: { onHoverChange: (href: string | null) => void; currentHover: string | null }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const isHovered = aboutDropdownItems.some(item => item.href === currentHover);
+  return (
+    <div className="relative" onMouseEnter={() => { setIsOpen(true); onHoverChange("dropdown"); }} onMouseLeave={() => { setIsOpen(false); onHoverChange(null); }}>
+      <button className={`flex items-center gap-1 relative px-4 py-2 text-sm font-medium transition-colors duration-300 ${isOpen || isHovered ? "text-white" : "text-zinc-300 hover:text-white"}`}>
+        Know More
+        <motion.div animate={{ rotate: isOpen ? 180 : 0 }}><ChevronDown size={16} /></motion.div>
+        {(isOpen || isHovered) && (<motion.div layoutId="pill" className="absolute inset-0 bg-white/20 rounded-full -z-10" transition={{ type: "spring", stiffness: 350, damping: 30 }}/>)}
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div initial="hidden" animate="visible" exit="hidden" variants={dropdownVariants}
+            className="absolute top-full mt-2 w-48 origin-top-right rounded-2xl border border-zinc-700 bg-black/70 p-2 shadow-xl backdrop-blur-lg">
+            {aboutDropdownItems.map((item) => (
+              <motion.div key={item.href} variants={itemVariants}>
+                <Link href={item.href} className="block text-left w-full px-3 py-2 text-sm text-zinc-300 hover:bg-white/10 hover:text-white rounded-lg">{item.name}</Link>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const mobileMenuVariants = { hidden: { x: "100%", transition: { type: "tween", ease: "easeIn" } }, visible: { x: 0, transition: { type: "tween", ease: "easeOut", staggerChildren: 0.07 } }};
+const mobileLinkVariants = { hidden: { opacity: 0, x: 50 }, visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 260, damping: 20 } }};
+const MobileMenuPanel = ({ setIsOpen, pathname }: { setIsOpen: (isOpen: boolean) => void, pathname: string }) => {
+    const allNavItems = [...navItems, ...aboutDropdownItems];
+    return (
+        <motion.div variants={mobileMenuVariants} initial="hidden" animate="visible" exit="hidden" className="fixed inset-0 z-30 bg-black/90 backdrop-blur-lg p-8 pt-24">
+            <div className="flex flex-col gap-4">
+                {allNavItems.map((item) => (
+                    <motion.div key={item.href} variants={mobileLinkVariants}>
+                        <Link href={item.href} onClick={() => setIsOpen(false)}
+                            className={`block text-3xl font-semibold text-center py-3 rounded-lg transition-colors ${ pathname === item.href ? "text-black bg-white" : "text-zinc-300 hover:text-white hover:bg-white/10"}`}>
+                            {item.name}
+                        </Link>
+                    </motion.div>
+                ))}
+                <motion.div className="mt-8 flex justify-center" variants={mobileLinkVariants}>
+                    <RegisterButton scrolled={false} />
+                </motion.div>
+            </div>
+        </motion.div>
+    );
+};
