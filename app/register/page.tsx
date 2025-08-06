@@ -106,9 +106,9 @@ export default function RegisterPage() {
               Event <span className="text-gradient">Details</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Detail icon={<Calendar size={24} />} title="Date" desc="August 29-30, 2025" />
+              <Detail icon={<Calendar size={24} />} title="Date" desc="August 28-29, 2025" />
               <Detail icon={<Clock size={24} />} title="Duration" desc="48 Hours" />
-              <Detail icon={<Users size={24} />} title="Team Size" desc="2-4 Members" />
+              <Detail icon={<Users size={24} />} title="Team Size" desc="1-5 Members" />
               <Detail icon={<Award size={24} />} title="Prize Pool" desc="₹2.5L+" />
             </div>
           </div>
