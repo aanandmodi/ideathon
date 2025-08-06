@@ -1,8 +1,9 @@
 {
-  "/register/page": "app/register/page.js",
   "/page": "app/page.js",
+  "/speakers-sponsors/page": "app/speakers-sponsors/page.js",
+  "/team/page": "app/team/page.js",
+  "/timeline/page": "app/timeline/page.js",
   "/challenges/page": "app/challenges/page.js",
-  "/about/page": "app/about/page.js",
-  "/glimpses/page": "app/glimpses/page.js",
-  "/team/page": "app/team/page.js"
+  "/prizes/page": "app/prizes/page.js",
+  "/glimpses/page": "app/glimpses/page.js"
 }
