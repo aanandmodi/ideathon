@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ChevronDown, ArrowRight } from "lucide-react" // Ensured ArrowRight is here
+import { Menu, X, ChevronDown, ArrowRight } from "lucide-react"
 import styled from 'styled-components';
 
 // --- Data for Navigation ---
@@ -23,26 +23,23 @@ const aboutDropdownItems = [
   { name: "About Page", href: "/about" },
 ]
 
-// --- SVG FILTER FOR GOOEY EFFECT (Re-added) ---
-const GooeyFilter = () => {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style={{ display: 'none' }}>
-      <defs>
-        <filter id="goo">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
-          <feBlend in="SourceGraphic" in2="goo" />
-        </filter>
-      </defs>
-    </svg>
-  );
-};
+// --- SVG FILTER FOR GOOEY EFFECT ---
+const GooeyFilter = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style={{ display: 'none' }}>
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+        <feBlend in="SourceGraphic" in2="goo" />
+      </filter>
+    </defs>
+  </svg>
+);
 
-// --- NEW: Gooey Gradient Register Button ---
+// --- Gooey Gradient Register Button (For Desktop) ---
 const generateBlobStyles = (numOfBlobs: number) => {
   let styles = '';
   for (let i = 1; i <= numOfBlobs; i++) {
-    // Distributes blobs across the button width
     styles += `
       &:nth-child(${i}) {
         left: ${(i - 1) * (100 / numOfBlobs)}%;
@@ -56,9 +53,9 @@ const generateBlobStyles = (numOfBlobs: number) => {
 const Blob = styled.span`
   position: absolute;
   top: 1px;
-  width: 25%; // Each blob is a quarter of the button's width
+  width: 25%;
   height: 100%;
-  background: #47d6e8; // Using the lighter color from the gradient for the wave
+  background: #47d6e8;
   border-radius: 100%;
   transform: translate3d(0, 150%, 0) scale(1.7);
   transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
@@ -77,7 +74,7 @@ const BlobsContainer = styled.div`
   width: 100%;
   height: 100%;
   filter: url('#goo');
-  overflow: hidden; // Ensures blobs don't spill out before animation
+  overflow: hidden;
   border-radius: 9999px;
 `;
 
@@ -87,26 +84,22 @@ const StyledGooeyButton = styled.a<{ $scrolled: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px; /* Space between text and arrow */
+  gap: 8px;
   padding: ${props => props.$scrolled ? '10px 24px' : '14px 32px'};
   margin: 0;
-  
   font-size: 16px;
-  font-weight: 600; /* semibold */
+  font-weight: 600;
   color: white;
-  
   background-image: linear-gradient(to right, #6b5aed, #47d6e8);
   border: none;
-  border-radius: 9999px; /* pill shape */
-  
-  overflow: hidden; // Crucial for containing the effect
+  border-radius: 9999px;
+  overflow: hidden;
   cursor: pointer;
   text-decoration: none;
   transition: all 0.3s ease-in-out;
 
-  /* The visible text and icon container */
   .button-text {
-    z-index: 2; // Keep text above the gooey effect
+    z-index: 2;
     position: relative;
     display: flex;
     align-items: center;
@@ -143,6 +136,16 @@ const RegisterButton = ({ scrolled }: { scrolled: boolean }) => {
   );
 };
 
+// --- NEW: Simple Register Button for Mobile Navbar ---
+const MobileRegisterButton = () => (
+    <Link 
+      href="/register" 
+      className="text-sm font-semibold text-white bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition-colors"
+    >
+      Register
+    </Link>
+);
+
 
 // --- Main Navbar Component ---
 export default function Navbar() {
@@ -165,7 +168,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ADD THE GOOEY FILTER SOMEWHERE IN THE RENDERED OUTPUT */}
       <GooeyFilter />
 
       {/* --- DESKTOP NAVBAR --- */}
@@ -182,7 +184,7 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* --- MOBILE NAVBAR --- */}
+      {/* --- MOBILE NAVBAR (MODIFIED) --- */}
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -190,10 +192,14 @@ export default function Navbar() {
         className={`fixed top-0 left-0 right-0 z-50 md:hidden transition-colors duration-300 ${navBackgroundClass}`}
       >
         <div className="flex items-center justify-between p-4">
-            <Logo scrolled={false} />
+          <Logo scrolled={false} />
+          {/* Container for mobile buttons */}
+          <div className="flex items-center gap-2">
+            <MobileRegisterButton />
             <motion.button whileTap={{ scale: 0.9 }} onClick={() => setIsOpen(!isOpen)} className="text-white p-2 z-10">
-             {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
             </motion.button>
+          </div>
         </div>
       </motion.nav>
       
@@ -205,7 +211,7 @@ export default function Navbar() {
   )
 }
 
-// --- Other Sub-components (unchanged) ---
+// --- Other Sub-components (Logo, DesktopNavLinks, DropdownMenu are unchanged) ---
 const Logo = ({ scrolled }: { scrolled: boolean }) => (
     <Link href="/" className="flex items-center gap-3 flex-shrink-0">
         <motion.img whileHover={{ rotate: -15, scale: 1.1 }} src="/logo.png" alt="Ideathon Logo" 
@@ -263,6 +269,9 @@ const DropdownMenu = ({ onHoverChange, currentHover }: { onHoverChange: (href: s
 
 const mobileMenuVariants = { hidden: { x: "100%", transition: { type: "tween", ease: "easeIn" } }, visible: { x: 0, transition: { type: "tween", ease: "easeOut", staggerChildren: 0.07 } }};
 const mobileLinkVariants = { hidden: { opacity: 0, x: 50 }, visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 260, damping: 20 } }};
+
+// --- MobileMenuPanel (MODIFIED) ---
+// Removed the redundant RegisterButton from the bottom of the panel
 const MobileMenuPanel = ({ setIsOpen, pathname }: { setIsOpen: (isOpen: boolean) => void, pathname: string }) => {
     const allNavItems = [...navItems, ...aboutDropdownItems];
     return (
@@ -276,9 +285,7 @@ const MobileMenuPanel = ({ setIsOpen, pathname }: { setIsOpen: (isOpen: boolean)
                         </Link>
                     </motion.div>
                 ))}
-                <motion.div className="mt-8 flex justify-center" variants={mobileLinkVariants}>
-                    <RegisterButton scrolled={false} />
-                </motion.div>
+                {/* The Register button was here, but is now removed as it's in the main mobile nav bar */}
             </div>
         </motion.div>
     );
