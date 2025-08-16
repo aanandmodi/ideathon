@@ -6,15 +6,17 @@ import Link from "next/link"
 import { Linkedin, Twitter, Globe, X, Star, Award, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
+// MODIFICATION 1: Speaker data has been replaced with generic placeholders.
+// This prevents spreading misinformation while keeping the UI structure intact.
 const speakers = [
   {
     id: 1,
-    name: "Dr. Priya Sharma",
-    title: "Chief Technology Officer",
-    company: "TechCorp India",
-    image: "/placeholder.svg?height=300&width=300&text=Dr.+Priya+Sharma",
-    bio: "Dr. Priya Sharma is a renowned technology leader with over 15 years of experience in AI and machine learning. She has led multiple successful startups and is passionate about mentoring young entrepreneurs.",
-    expertise: ["Artificial Intelligence", "Machine Learning", "Startup Strategy"],
+    name: "Speaker TBA",
+    title: "Industry Leader",
+    company: "Expert in Tech & Innovation",
+    image: "/placeholder.svg?height=300&width=300&text=?",
+    bio: "We are thrilled to be finalizing our speaker lineup. Details about this inspiring industry leader will be revealed soon. Stay tuned for an announcement!",
+    expertise: ["Innovation", "Leadership", "Future Tech"],
     social: {
       linkedin: "#",
       twitter: "#",
@@ -23,12 +25,12 @@ const speakers = [
   },
   {
     id: 2,
-    name: "Rajesh Kumar",
-    title: "Serial Entrepreneur",
-    company: "Founder of 3 Successful Startups",
-    image: "/placeholder.svg?height=300&width=300&text=Rajesh+Kumar",
-    bio: "Rajesh Kumar is a serial entrepreneur who has founded and successfully exited three startups. He is now an active angel investor and mentor, helping the next generation of entrepreneurs.",
-    expertise: ["Entrepreneurship", "Business Strategy", "Fundraising"],
+    name: "Speaker TBA",
+    title: "Visionary Entrepreneur",
+    company: "Expert in Business & Strategy",
+    image: "/placeholder.svg?height=300&width=300&text=?",
+    bio: "Get ready to be inspired by a leading voice in the entrepreneurial world. Full details will be shared shortly. Keep an eye on our updates!",
+    expertise: ["Strategy", "Growth", "Startups"],
     social: {
       linkedin: "#",
       twitter: "#",
@@ -37,12 +39,12 @@ const speakers = [
   },
   {
     id: 3,
-    name: "Sarah Johnson",
-    title: "VP of Innovation",
-    company: "Global Ventures",
-    image: "/placeholder.svg?height=300&width=300&text=Sarah+Johnson",
-    bio: "Sarah Johnson leads innovation initiatives at Global Ventures, one of the world's largest venture capital firms. She has a keen eye for identifying disruptive technologies and has been instrumental in funding over 50 successful startups.",
-    expertise: ["Venture Capital", "Innovation Strategy", "Market Analysis"],
+    name: "Speaker TBA",
+    title: "Market Shaper",
+    company: "Expert in Venture & Finance",
+    image: "/placeholder.svg?height=300&width=300&text=?",
+    bio: "An influential expert is set to join our stage. We're putting the final touches on the announcement. You won't want to miss this!",
+    expertise: ["Venture Capital", "Finance", "Markets"],
     social: {
       linkedin: "#",
       twitter: "#",
@@ -51,12 +53,12 @@ const speakers = [
   },
   {
     id: 4,
-    name: "Dr. Amit Patel",
-    title: "Research Director",
-    company: "Innovation Labs",
-    image: "/placeholder.svg?height=300&width=300&text=Dr.+Amit+Patel",
-    bio: "Dr. Amit Patel is a leading researcher in emerging technologies with a focus on blockchain and IoT. He has published over 100 research papers and holds 25 patents in various technology domains.",
-    expertise: ["Blockchain", "IoT", "Research & Development"],
+    name: "Speaker TBA",
+    title: "Domain Expert",
+    company: "Pioneer in Research & Development",
+    image: "/placeholder.svg?height=300&width=300&text=?",
+    bio: "We are excited to bring a top mind from the world of research and development to our event. Speaker details will be announced very soon!",
+    expertise: ["R&D", "Emerging Tech", "Analysis"],
     social: {
       linkedin: "#",
       twitter: "#",
@@ -65,15 +67,11 @@ const speakers = [
   },
 ]
 
+
 const allSponsors = [
-    { name: "Ahmedabad Signal Vadapav", logo: "/sponser1.png?height=200&width=350&text=TechCorp+Global", website: "#" },
-    { name: "Ahmedabad Mirror", logo: "/sponser2.png?height=100&width=250&text=InnovateLabs", website: "#" },
-    { name: "StartupHub", logo: "/placeholder.svg?height=100&width=250&text=StartupHub", website: "#" },
-    { name: "VentureCapital Pro", logo: "/placeholder.svg?height=100&width=250&text=VentureCapital+Pro", website: "#" },
-    { name: "Future Systems", logo: "/placeholder.svg?height=100&width=250&text=Future+Systems", website: "#" },
-    { name: "NextGen AI", logo: "/placeholder.svg?height=100&width=250&text=NextGen+AI", website: "#" },
-    { name: "EcoSolutions", logo: "/placeholder.svg?height=100&width=250&text=EcoSolutions", website: "#" },
-    { name: "QuantumLeap", logo: "/placeholder.svg?height=100&width=250&text=QuantumLeap", website: "#" },
+    { name: "Ahmedabad Signal Vadapav", logo: "/sponser1.png?height=200&width=350&text=TechCorp+Global", website: "https://www.instagram.com/asv.2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
+    { name: "Ahmedabad Mirror", logo: "/sponser2.png?height=100&width=250&text=InnovateLabs", website: "https://www.instagram.com/ahmedabadmirrorofficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
+    { name: "UnStop", logo: "/placeholder.svg?height=100&width=250&text=StartupHub", website: "#" },
 ];
 
 // Reusable Marquee Component for Sponsors
@@ -89,14 +87,12 @@ const SponsorMarquee = ({ sponsors, speed = '80s' }: {
       >
         {/* Render logos twice for a seamless loop */}
         {[...sponsors, ...sponsors].map((sponsor, index) => (
-          // FIX 1: The 'group' class is named 'group/logo' to make it unique.
           <Link href={sponsor.website} key={index} target="_blank" className="flex-shrink-0 mx-8 flex items-center justify-center group/logo">
             <Image
               src={sponsor.logo}
               alt={`${sponsor.name} logo`}
               width={250}
               height={100}
-              // FIX 2: The hover effects now specifically target the 'group-hover/logo' state.
               className="h-20 w-48 object-contain transition-all duration-300 filter grayscale group-hover/logo:filter-none group-hover/logo:scale-105"
               onError={(e) => {
                 const target = e.target as HTMLImageElement
@@ -137,10 +133,11 @@ export default function SpeakersSponsorsPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
               {speakers.map((speaker) => (
+                // MODIFICATION 2: The onClick handler is removed and cursor is set to default.
+                // This makes the cards non-interactive, preventing the modal from opening.
                 <div
                   key={speaker.id}
-                  className="glass-effect-strong rounded-3xl overflow-hidden hover-glow cursor-pointer group"
-                  onClick={() => setSelectedSpeaker(speaker)}
+                  className="glass-effect-strong rounded-3xl overflow-hidden group cursor-default"
                 >
                   <div className="relative">
                     <Image
@@ -148,25 +145,26 @@ export default function SpeakersSponsorsPage() {
                       alt={speaker.name}
                       width={300}
                       height={300}
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                      // MODIFICATION 3: A grayscale filter is applied to visually indicate a placeholder.
+                      className="w-full h-64 object-cover transition-transform duration-300 filter grayscale"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement
                         target.src = `/placeholder.svg?height=300&width=300&text=${encodeURIComponent(speaker.name)}`
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-black/50" />
+                    {/* MODIFICATION 4: A "To Be Announced" tag is added over the image. */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="bg-black/60 backdrop-blur-sm text-white font-semibold px-4 py-2 rounded-lg border border-white/20">
+                            To Be Announced
+                        </span>
+                    </div>
                   </div>
                   <div className="p-6">
                     <h3 className="text-xl font-bold text-white mb-2">{speaker.name}</h3>
                     <p className="text-blue-400 font-semibold mb-1">{speaker.title}</p>
                     <p className="text-gray-300 text-sm mb-4">{speaker.company}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {speaker.expertise.slice(0, 2).map((skill, index) => (
-                        <span key={index} className="px-3 py-1 bg-purple-500/20 text-purple-300 text-xs rounded-full">
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
+                    {/* The expertise tags are removed from the card to keep it clean, but the data remains if you want to add them back. */}
                   </div>
                 </div>
               ))}
@@ -213,7 +211,8 @@ export default function SpeakersSponsorsPage() {
             </div>
           </div>
           
-          {/* Speaker Modal */}
+          {/* The Speaker Modal is kept in the code but won't be triggered.
+              You can easily re-enable it by adding the `onClick` handler back to the speaker cards once speakers are confirmed. */}
           {selectedSpeaker && (
             <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
               <div className="glass-effect-strong rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">

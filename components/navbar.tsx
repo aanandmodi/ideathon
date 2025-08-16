@@ -12,12 +12,11 @@ const navItems = [
   { name: "Home", href: "/" },
   { name: "Challenges", href: "/challenges" },
   { name: "Timeline", href: "/timeline" },
-  { name: "Prizes", href: "/prizes" },
+  { name: "Speakers & Sponsors", href: "/speakers-sponsors" },
 ]
 
 const aboutDropdownItems = [
   { name: "Glimpse", href: "/glimpses" },
-  { name: "Speakers & Sponsors", href: "/speakers-sponsors" },
   { name: "Team", href: "/team" },
   { name: "Contact us", href: "/contact" },
   { name: "About Page", href: "/about" },
@@ -136,11 +135,11 @@ const RegisterButton = ({ scrolled }: { scrolled: boolean }) => {
   );
 };
 
-// --- NEW: Simple Register Button for Mobile Navbar ---
+// --- Simple Register Button for Mobile Navbar ---
 const MobileRegisterButton = () => (
     <Link 
       href="/register" 
-      className="text-sm font-semibold text-white bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition-colors"
+      className="rounded-full bg-white/15 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/25"
     >
       Register
     </Link>
@@ -164,7 +163,7 @@ export default function Navbar() {
     return () => { document.body.style.overflow = "auto" }
   }, [isOpen])
 
-  const navBackgroundClass = scrolled ? 'bg-black/10 backdrop-blur-lg' : 'bg-transparent'
+  const desktopNavBackgroundClass = scrolled ? 'bg-black/10 backdrop-blur-lg' : 'bg-transparent'
 
   return (
     <>
@@ -175,7 +174,7 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: "circOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 hidden md:block transition-colors duration-300 ${navBackgroundClass}`}
+        className={`fixed top-0 left-0 right-0 z-50 hidden md:block transition-colors duration-300 ${desktopNavBackgroundClass}`}
       >
         <div className={`container mx-auto flex items-center justify-between transition-all duration-300 ${scrolled ? 'p-2' : 'p-4'}`}>
           <Logo scrolled={scrolled} />
@@ -184,20 +183,33 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* --- MOBILE NAVBAR (MODIFIED) --- */}
+      {/* --- MOBILE NAVBAR --- */}
       <motion.nav
-        initial={{ y: -100 }}
+        initial={{ y: -150 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: "circOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 md:hidden transition-colors duration-300 ${navBackgroundClass}`}
+        className="fixed top-0 left-0 right-0 z-50 md:hidden"
       >
-        <div className="flex items-center justify-between p-4">
+        <div className="mx-4 mt-4 flex items-center justify-between rounded-2xl border border-white/20 bg-white/10 p-2 shadow-lg backdrop-blur-lg">
           <Logo scrolled={false} />
-          {/* Container for mobile buttons */}
           <div className="flex items-center gap-2">
             <MobileRegisterButton />
-            <motion.button whileTap={{ scale: 0.9 }} onClick={() => setIsOpen(!isOpen)} className="text-white p-2 z-10">
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setIsOpen(!isOpen)}
+              className="relative z-[60] flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25"
+            >
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={isOpen ? "x" : "menu"}
+                  initial={{ y: -20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 20, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {isOpen ? <X size={20} /> : <Menu size={20} />}
+                </motion.div>
+              </AnimatePresence>
             </motion.button>
           </div>
         </div>
@@ -211,7 +223,7 @@ export default function Navbar() {
   )
 }
 
-// --- Other Sub-components (Logo, DesktopNavLinks, DropdownMenu are unchanged) ---
+// --- Sub-components ---
 const Logo = ({ scrolled }: { scrolled: boolean }) => (
     <Link href="/" className="flex items-center gap-3 flex-shrink-0">
         <motion.img whileHover={{ rotate: -15, scale: 1.1 }} src="/logo.png" alt="Ideathon Logo" 
@@ -267,26 +279,106 @@ const DropdownMenu = ({ onHoverChange, currentHover }: { onHoverChange: (href: s
   );
 };
 
-const mobileMenuVariants = { hidden: { x: "100%", transition: { type: "tween", ease: "easeIn" } }, visible: { x: 0, transition: { type: "tween", ease: "easeOut", staggerChildren: 0.07 } }};
+// --- Animation Variants ---
 const mobileLinkVariants = { hidden: { opacity: 0, x: 50 }, visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 260, damping: 20 } }};
+const fullscreenMenuVariants = {
+  hidden: { y: "100%", transition: { type: "tween", ease: "easeIn" } },
+  visible: { y: 0, transition: { type: "tween", ease: "easeOut", staggerChildren: 0.07 } }
+};
 
-// --- MobileMenuPanel (MODIFIED) ---
-// Removed the redundant RegisterButton from the bottom of the panel
-const MobileMenuPanel = ({ setIsOpen, pathname }: { setIsOpen: (isOpen: boolean) => void, pathname: string }) => {
-    const allNavItems = [...navItems, ...aboutDropdownItems];
+// --- Mobile Accordion Component (REDESIGNED) ---
+const MobileAccordion = ({ items, pathname, closeMenu }) => {
+    const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+    const isParentActive = items.some(item => item.href === pathname);
+  
+    useEffect(() => {
+      if (isParentActive) setIsAccordionOpen(true);
+    }, [isParentActive]);
+  
     return (
-        <motion.div variants={mobileMenuVariants} initial="hidden" animate="visible" exit="hidden" className="fixed inset-0 z-30 bg-black/90 backdrop-blur-lg p-8 pt-24">
-            <div className="flex flex-col gap-4">
-                {allNavItems.map((item) => (
-                    <motion.div key={item.href} variants={mobileLinkVariants}>
-                        <Link href={item.href} onClick={() => setIsOpen(false)}
-                            className={`block text-3xl font-semibold text-center py-3 rounded-lg transition-colors ${ pathname === item.href ? "text-black bg-white" : "text-zinc-300 hover:text-white hover:bg-white/10"}`}>
-                            {item.name}
-                        </Link>
-                    </motion.div>
-                ))}
-                {/* The Register button was here, but is now removed as it's in the main mobile nav bar */}
-            </div>
+      <motion.div variants={mobileLinkVariants}>
+        <button
+          onClick={() => setIsAccordionOpen(!isAccordionOpen)}
+          className={`w-full flex justify-between items-center text-left text-2xl font-semibold py-4 transition-colors ${
+            isParentActive ? "text-white" : "text-zinc-400"
+          } hover:text-white`}
+        >
+          <span>Know More</span>
+          <motion.div animate={{ rotate: isAccordionOpen ? 180 : 0 }}>
+            <ChevronDown size={24} />
+          </motion.div>
+        </button>
+  
+        <AnimatePresence>
+          {isAccordionOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="overflow-hidden flex flex-col pl-4 border-l-2 border-zinc-700"
+            >
+              {items.map(item => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={closeMenu}
+                  className={`block text-xl font-medium py-3 transition-colors ${
+                    pathname === item.href
+                      ? "text-white"
+                      : "text-zinc-500 hover:text-white"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    );
+};
+
+// --- MobileMenuPanel (REDESIGNED) ---
+const MobileMenuPanel = ({ setIsOpen, pathname }: { setIsOpen: (isOpen: boolean) => void, pathname: string }) => {
+    return (
+        <motion.div
+            className="fixed inset-0 z-30 bg-black/50 backdrop-blur-md"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsOpen(false)}
+        >
+            <motion.div
+                variants={fullscreenMenuVariants}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                onClick={(e) => e.stopPropagation()}
+                className="fixed inset-0 flex flex-col justify-center bg-zinc-900/80 p-8 shadow-2xl backdrop-blur-2xl"
+            >
+                <div className="flex flex-col divide-y divide-zinc-700">
+                    {navItems.map((item) => (
+                        <motion.div key={item.href} variants={mobileLinkVariants}>
+                            <Link
+                                href={item.href}
+                                onClick={() => setIsOpen(false)}
+                                className={`block text-3xl font-semibold text-left py-4 transition-colors hover:text-white ${
+                                    pathname === item.href
+                                        ? "bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-cyan-400"
+                                        : "text-zinc-300"
+                                }`}
+                            >
+                                {item.name}
+                            </Link>
+                        </motion.div>
+                    ))}
+                    <MobileAccordion
+                        items={aboutDropdownItems}
+                        pathname={pathname}
+                        closeMenu={() => setIsOpen(false)}
+                    />
+                </div>
+            </motion.div>
         </motion.div>
     );
 };
