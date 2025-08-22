@@ -139,19 +139,6 @@ const teamMembers = [
   },
   // Other Members
   {
-    id: 11,
-    name: "Pratham Patel",
-    role: "Core member",
-    image: "/pratham.jpeg?height=300&width=300&text=Tanya+Bansal",
-    bio: "A dedicated core member, Pratham is the bridge between our team and the public.",
-    skills: ["Public Relations", "Media Outreach", "Team Collaboration"],
-    social: {
-      linkedin: "https://www.linkedin.com/in/pratham-patel-2978042ab",
-      instagram: "https://www.linkedin.com/in/pratham-patel-2978042ab",
-      email: "tanya@ecellignite.in",
-    },
-  },
-  {
     id: 12,
     name: "Priyasingh Rajput",
     role: "treasurer",

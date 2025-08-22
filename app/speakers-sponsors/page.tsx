@@ -6,72 +6,64 @@ import Link from "next/link"
 import { Linkedin, Twitter, Globe, X, Star, Award, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-// MODIFICATION 1: Speaker data has been replaced with generic placeholders.
-// This prevents spreading misinformation while keeping the UI structure intact.
+// --- MODIFIED SPEAKERS DATA ---
 const speakers = [
+  // 1. Featured Speaker updated to Parth Gupta
   {
     id: 1,
-    name: "Speaker TBA",
-    title: "Industry Leader",
-    company: "Expert in Tech & Innovation",
-    image: "/placeholder.svg?height=300&width=300&text=?",
-    bio: "We are thrilled to be finalizing our speaker lineup. Details about this inspiring industry leader will be revealed soon. Stay tuned for an announcement!",
-    expertise: ["Innovation", "Leadership", "Future Tech"],
+    name: "Parth Gupta",
+    title: "Security Analyst",
+    company: "EY | India's Youngest Certified Ethical Hacker",
+    image: "speaker1.jpg",
+    bio: "Parth Gupta is a Security Analyst at EY and holds the record for being India's Youngest Certified Ethical Hacker. With accolades from the EC Council and the Golden Book of World Records, Parth is a prominent young expert in the field of cybersecurity.",
+    expertise: ["Ethical Hacking", "Cybersecurity", "Security Analysis"],
     social: {
-      linkedin: "#",
+      linkedin: "https://in.linkedin.com/in/parth-gupta-8a62b7131",
       twitter: "#",
-      website: "#",
+      website: "http://www.infikeytech.com/",
     },
   },
+  // 2. Coming Soon Placeholder
   {
     id: 2,
-    name: "Speaker TBA",
-    title: "Visionary Entrepreneur",
-    company: "Expert in Business & Strategy",
+    name: "Coming Soon",
+    title: "Stay Tuned",
+    company: "Future Speaker Announcement",
     image: "/placeholder.svg?height=300&width=300&text=?",
-    bio: "Get ready to be inspired by a leading voice in the entrepreneurial world. Full details will be shared shortly. Keep an eye on our updates!",
-    expertise: ["Strategy", "Growth", "Startups"],
-    social: {
-      linkedin: "#",
-      twitter: "#",
-      website: "#",
-    },
+    bio: "The profile for this speaker will be revealed soon. Keep an eye on this space for exciting updates!",
+    expertise: [],
+    social: { linkedin: "#", twitter: "#", website: "#" },
   },
+  // 3. Coming Soon Placeholder
   {
     id: 3,
-    name: "Speaker TBA",
-    title: "Market Shaper",
-    company: "Expert in Venture & Finance",
+    name: "Coming Soon",
+    title: "Stay Tuned",
+    company: "Future Speaker Announcement",
     image: "/placeholder.svg?height=300&width=300&text=?",
-    bio: "An influential expert is set to join our stage. We're putting the final touches on the announcement. You won't want to miss this!",
-    expertise: ["Venture Capital", "Finance", "Markets"],
-    social: {
-      linkedin: "#",
-      twitter: "#",
-      website: "#",
-    },
+    bio: "The profile for this speaker will be revealed soon. Keep an eye on this space for exciting updates!",
+    expertise: [],
+    social: { linkedin: "#", twitter: "#", website: "#" },
   },
+  // 4. Coming Soon Placeholder
   {
     id: 4,
-    name: "Speaker TBA",
-    title: "Domain Expert",
-    company: "Pioneer in Research & Development",
+    name: "Coming Soon",
+    title: "Stay Tuned",
+    company: "Future Speaker Announcement",
     image: "/placeholder.svg?height=300&width=300&text=?",
-    bio: "We are excited to bring a top mind from the world of research and development to our event. Speaker details will be announced very soon!",
-    expertise: ["R&D", "Emerging Tech", "Analysis"],
-    social: {
-      linkedin: "#",
-      twitter: "#",
-      website: "#",
-    },
+    bio: "The profile for this speaker will be revealed soon. Keep an eye on this space for exciting updates!",
+    expertise: [],
+    social: { linkedin: "#", twitter: "#", website: "#" },
   },
 ]
 
-
+// Sponsors data remains the same
 const allSponsors = [
-    { name: "Ahmedabad Signal Vadapav", logo: "/sponser1.png?height=200&width=350&text=TechCorp+Global", website: "https://www.instagram.com/asv.2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
-    { name: "Ahmedabad Mirror", logo: "/sponser2.png?height=100&width=250&text=InnovateLabs", website: "https://www.instagram.com/ahmedabadmirrorofficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
-    { name: "UnStop", logo: "/placeholder.svg?height=100&width=250&text=StartupHub", website: "#" },
+    { name: "Ahmedabad Signal Vadapav", logo: "/sponser1.png?height=200&width=350&text=Ahmedabad+Signal+Vadapav", website: "https://www.instagram.com/asv.2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
+    { name: "Ahmedabad Mirror", logo: "/sponser2.png?height=100&width=250&text=Ahmedabad+Mirror", website: "https://www.instagram.com/ahmedabadmirrorofficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
+    { name: "Unstop", logo: "/sponser3.png?height=100&width=250&text=Unstop", website: "https://unstop.com/" },
+    { name: "Tru scholar", logo: "/sponser4.svg?height=100&width=250&text=Tru+Scholar", website: "https://www.truscholar.io/" },
 ];
 
 // Reusable Marquee Component for Sponsors
@@ -93,7 +85,7 @@ const SponsorMarquee = ({ sponsors, speed = '80s' }: {
               alt={`${sponsor.name} logo`}
               width={250}
               height={100}
-              className="h-20 w-48 object-contain transition-all duration-300 filter grayscale group-hover/logo:filter-none group-hover/logo:scale-105"
+              className="h-20 w-48 object-contain transition-all duration-300 group-hover/logo:filter-none group-hover/logo:scale-105"
               onError={(e) => {
                 const target = e.target as HTMLImageElement
                 target.src = `/placeholder.svg?height=100&width=250&text=${encodeURIComponent(sponsor.name)}`
@@ -132,42 +124,47 @@ export default function SpeakersSponsorsPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-              {speakers.map((speaker) => (
-                // MODIFICATION 2: The onClick handler is removed and cursor is set to default.
-                // This makes the cards non-interactive, preventing the modal from opening.
-                <div
-                  key={speaker.id}
-                  className="glass-effect-strong rounded-3xl overflow-hidden group cursor-default"
-                >
-                  <div className="relative">
-                    <Image
-                      src={speaker.image || "/placeholder.svg"}
-                      alt={speaker.name}
-                      width={300}
-                      height={300}
-                      // MODIFICATION 3: A grayscale filter is applied to visually indicate a placeholder.
-                      className="w-full h-64 object-cover transition-transform duration-300 filter grayscale"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement
-                        target.src = `/placeholder.svg?height=300&width=300&text=${encodeURIComponent(speaker.name)}`
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-black/50" />
-                    {/* MODIFICATION 4: A "To Be Announced" tag is added over the image. */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="bg-black/60 backdrop-blur-sm text-white font-semibold px-4 py-2 rounded-lg border border-white/20">
-                            To Be Announced
-                        </span>
+              {speakers.map((speaker) => {
+                const isComingSoon = speaker.name === "Coming Soon";
+                return (
+                  <div
+                    key={speaker.id}
+                    className={`glass-effect-strong rounded-3xl overflow-hidden group transition-opacity ${
+                      isComingSoon
+                        ? 'cursor-default opacity-60'
+                        : 'hover-glow cursor-pointer'
+                    }`}
+                    onClick={() => !isComingSoon && setSelectedSpeaker(speaker)}
+                  >
+                    <div className="relative">
+                      <Image
+                        src={speaker.image || "/placeholder.svg"}
+                        alt={speaker.name}
+                        width={300}
+                        height={300}
+                        className={`w-full h-64 object-cover transition-transform duration-300 ${!isComingSoon && 'group-hover:scale-105'}`}
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement
+                          target.src = `/placeholder.svg?height=300&width=300&text=${encodeURIComponent(speaker.name)}`
+                        }}
+                      />
+                      <div className={`absolute inset-0 bg-gradient-to-t from-black/60 to-transparent transition-opacity duration-300 ${!isComingSoon && 'opacity-0 group-hover:opacity-100'}`} />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-white mb-2">{speaker.name}</h3>
+                      <p className="text-blue-400 font-semibold mb-1">{speaker.title}</p>
+                      <p className="text-gray-300 text-sm mb-4">{speaker.company}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {speaker.expertise.slice(0, 2).map((skill, index) => (
+                          <span key={index} className="px-3 py-1 bg-purple-500/20 text-purple-300 text-xs rounded-full">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-white mb-2">{speaker.name}</h3>
-                    <p className="text-blue-400 font-semibold mb-1">{speaker.title}</p>
-                    <p className="text-gray-300 text-sm mb-4">{speaker.company}</p>
-                    {/* The expertise tags are removed from the card to keep it clean, but the data remains if you want to add them back. */}
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
 
             <div className="glass-effect-strong p-8 md:p-12 rounded-3xl">
@@ -211,8 +208,7 @@ export default function SpeakersSponsorsPage() {
             </div>
           </div>
           
-          {/* The Speaker Modal is kept in the code but won't be triggered.
-              You can easily re-enable it by adding the `onClick` handler back to the speaker cards once speakers are confirmed. */}
+          {/* Speaker Modal */}
           {selectedSpeaker && (
             <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
               <div className="glass-effect-strong rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -245,13 +241,13 @@ export default function SpeakersSponsorsPage() {
                       <p className="text-gray-300 mb-4">{selectedSpeaker.company}</p>
 
                       <div className="flex space-x-4 mb-6">
-                        <a href={selectedSpeaker.social.linkedin} className="text-gray-300 hover:text-purple-400 transition-colors">
+                        <a href={selectedSpeaker.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-purple-400 transition-colors">
                           <Linkedin size={20} />
                         </a>
-                        <a href={selectedSpeaker.social.twitter} className="text-gray-300 hover:text-purple-400 transition-colors">
+                        <a href={selectedSpeaker.social.twitter} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-purple-400 transition-colors">
                           <Twitter size={20} />
                         </a>
-                        <a href={selectedSpeaker.social.website} className="text-gray-300 hover:text-purple-400 transition-colors">
+                        <a href={selectedSpeaker.social.website} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-purple-400 transition-colors">
                           <Globe size={20} />
                         </a>
                       </div>
