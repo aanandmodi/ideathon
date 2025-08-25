@@ -6,9 +6,9 @@ import Link from "next/link"
 import { Linkedin, Twitter, Globe, X, Star, Award, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-// --- MODIFIED SPEAKERS DATA ---
+// --- SPEAKERS DATA ---
 const speakers = [
-  // 1. Featured Speaker updated to Parth Gupta
+  // 1. Featured Speaker
   {
     id: 1,
     name: "Parth Gupta",
@@ -23,47 +23,44 @@ const speakers = [
       website: "http://www.infikeytech.com/",
     },
   },
-  // 2. Coming Soon Placeholder
+  // 2. Second Speaker
   {
     id: 2,
-    name: "Coming Soon",
-    title: "Stay Tuned",
-    company: "Future Speaker Announcement",
-    image: "/placeholder.svg?height=300&width=300&text=?",
-    bio: "The profile for this speaker will be revealed soon. Keep an eye on this space for exciting updates!",
-    expertise: [],
-    social: { linkedin: "#", twitter: "#", website: "#" },
+    name: "Shyam N Chawda",
+    title: "Founder & CEO",
+    company: "Shyam Sir Institute",
+    image: "/speaker2.jpg?height=300&width=300&text=Shyam+N+Chawda",
+    bio: "Shyam Sir, Founder & CEO of Shyam Sir Institute, is a pioneer in coding and tech education with over 15 years of experience. Through his institute, he has trained thousands of students across India and abroad, equipping them with skills in coding, AI, and innovation.",
+    expertise: ["Coding", "AI", "Mentorship"],
+    social: { 
+      linkedin: "https://www.linkedin.com/in/shyam-n-chawda-9a0360315?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app", 
+      twitter: "#", 
+      website: "https://shyamsir.com/" 
+    },
   },
-  // 3. Coming Soon Placeholder
+  // 3. Third speaker updated to CA Shikha Agarwal
   {
     id: 3,
-    name: "Coming Soon",
-    title: "Stay Tuned",
-    company: "Future Speaker Announcement",
-    image: "/placeholder.svg?height=300&width=300&text=?",
-    bio: "The profile for this speaker will be revealed soon. Keep an eye on this space for exciting updates!",
-    expertise: [],
-    social: { linkedin: "#", twitter: "#", website: "#" },
-  },
-  // 4. Coming Soon Placeholder
-  {
-    id: 4,
-    name: "Coming Soon",
-    title: "Stay Tuned",
-    company: "Future Speaker Announcement",
-    image: "/placeholder.svg?height=300&width=300&text=?",
-    bio: "The profile for this speaker will be revealed soon. Keep an eye on this space for exciting updates!",
-    expertise: [],
-    social: { linkedin: "#", twitter: "#", website: "#" },
+    name: "CA Shikha Agarwal",
+    title: "Finance Expert",
+    company: "V S Agarwal & Associates LLP",
+    image: "/speaker3.jpg?height=300&width=300&text=CA+Shikha+Agarwal",
+    bio: "CA Shikha Agarwal, FCA, is the Managing Partner at V S Agarwal & Associates LLP with over 17 years of expertise in audit, taxation, corporate finance, and management consulting. She currently serves as MCM Member (2025–29) and WICASA Chairperson (2025–26) at the Ahmedabad Branch of ICAI.",
+    expertise: ["Finance", "Focus", "Future"],
+    social: { 
+      linkedin: "https://www.linkedin.com/in/shikhaagarwal?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app", 
+      twitter: "#", 
+      website: "#" 
+    },
   },
 ]
 
-// Sponsors data remains the same
+// --- SPONSORS DATA ---
 const allSponsors = [
-    { name: "Ahmedabad Signal Vadapav", logo: "/sponser1.png?height=200&width=350&text=Ahmedabad+Signal+Vadapav", website: "https://www.instagram.com/asv.2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
-    { name: "Ahmedabad Mirror", logo: "/sponser2.png?height=100&width=250&text=Ahmedabad+Mirror", website: "https://www.instagram.com/ahmedabadmirrorofficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
+    { name: "Ahmedabad Signal Vadapav", logo: "/sponser1.png?height=200&width=350&text=Ahmedabad+Signal+Vadapav", website: "https://www.instagram.com/asv.2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDcOZUODc0MzIxNw==" },
+    { name: "Ahmedabad Mirror", logo: "/sponser2.png?height=100&width=250&text=Ahmedabad+Mirror", website: "https://www.instagram.com/ahmedabadmirrorofficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDcOZUODc0MzIxNw==" },
     { name: "Unstop", logo: "/sponser3.png?height=100&width=250&text=Unstop", website: "https://unstop.com/" },
-    { name: "Tru scholar", logo: "/sponser4.svg?height=100&width=250&text=Tru+Scholar", website: "https://www.truscholar.io/" },
+    { name: "TruScholar", logo: "/sponser4.svg?height=100&width=250&text=VentureCapital+Pro", website: "https://www.truscholar.io/" },
 ];
 
 // Reusable Marquee Component for Sponsors
@@ -73,7 +70,7 @@ const SponsorMarquee = ({ sponsors, speed = '80s' }: {
 }) => {
   return (
     <div className="relative w-full overflow-hidden group">
-      <div 
+      <div
         className="marquee-content flex w-max animate-[marquee-left_var(--marquee-speed)_linear_infinite] group-hover:[animation-play-state:paused]"
         style={{ '--marquee-speed': speed } as React.CSSProperties}
       >
@@ -85,7 +82,7 @@ const SponsorMarquee = ({ sponsors, speed = '80s' }: {
               alt={`${sponsor.name} logo`}
               width={250}
               height={100}
-              className="h-20 w-48 object-contain transition-all duration-300 group-hover/logo:filter-none group-hover/logo:scale-105"
+              className="h-20 w-48 object-contain transition-all duration-300 group-hover/logo:scale-105"
               onError={(e) => {
                 const target = e.target as HTMLImageElement
                 target.src = `/placeholder.svg?height=100&width=250&text=${encodeURIComponent(sponsor.name)}`
@@ -123,7 +120,8 @@ export default function SpeakersSponsorsPage() {
                </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            {/* MODIFIED: Grid layout changed to lg:grid-cols-3 for 3 speakers */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
               {speakers.map((speaker) => {
                 const isComingSoon = speaker.name === "Coming Soon";
                 return (

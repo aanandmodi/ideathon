@@ -87,7 +87,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/20 mt-8 pt-8 text-center">
-          <p className="text-gray-300">© 2025 Ecell Ignite. All rights reserved. Made with ❤️ for innovation.</p>
+          <p className="text-gray-300">© 2025 Ecell Ignite | All rights reserved</p>
         </div>
       </div>
     </footer>
