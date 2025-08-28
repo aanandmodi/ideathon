@@ -284,7 +284,7 @@ const teamMembers = [
     id: 28,
     name: "Aditi Thakur",
     role: "Content Creation",
-    image: "/Aditi.jpg",
+    image: "/aditi.jpg",
     bio: "Focuses on creating engaging and relevant content for the ideathon.",
     skills: ["Content Strategy", "Creative Writing", "Digital Content"],
     social: {
@@ -349,7 +349,7 @@ const teamMembers = [
     id: 33,
     name: "Namrata Brahambhatt",
     role: "Marketing",
-    image: "/Namrata.jpg",
+    image: "/namrata.jpg",
     bio: "Assists in developing and implementing marketing strategies for the event.",
     skills: ["Marketing", "Campaigns", "Outreach"],
     social: {
