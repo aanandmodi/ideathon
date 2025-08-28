@@ -5,10 +5,12 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Calendar, Users, Trophy, Lightbulb, Target, Rocket } from "lucide-react"
 
+// Helper function to format numbers with a leading zero
 function pad(num: number) {
   return num.toString().padStart(2, "0")
 }
 
+// Main Page Component
 export default function HomePage() {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -16,29 +18,47 @@ export default function HomePage() {
     minutes: 0,
     seconds: 0,
   })
+  // State to track if the event is currently live
+  const [isEventLive, setIsEventLive] = useState(false)
 
   useEffect(() => {
-    const targetDate = new Date("2025-08-29T09:30:00").getTime()
+    const targetDate = new Date("2025-08-28T09:30:00").getTime()
+    
+    let timer: NodeJS.Timeout;
 
-    const timer = setInterval(() => {
+    // First, check if the event has already started when the component loads.
+    if (new Date().getTime() >= targetDate) {
+      setIsEventLive(true);
+      // No timer is needed, so we exit the effect early.
+      return;
+    }
+
+    // If we reach here, the event is in the future.
+    // So, we set up the interval to update the countdown.
+    timer = setInterval(() => {
       const now = new Date().getTime()
       const difference = targetDate - now
 
-      const days = Math.max(0, Math.floor(difference / (1000 * 60 * 60 * 24)))
-      const hours = Math.max(0, Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)))
-      const minutes = Math.max(0, Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)))
-      const seconds = Math.max(0, Math.floor((difference % (1000 * 60)) / 1000))
-
-      setTimeLeft({ days, hours, minutes, seconds })
-
       if (difference < 0) {
-        clearInterval(timer)
+        // When the countdown finishes, mark event as live and clear the interval.
+        setIsEventLive(true)
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+        clearInterval(timer)
+      } else {
+        // Otherwise, update the time left.
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000)
+        setTimeLeft({ days, hours, minutes, seconds })
       }
     }, 1000)
 
+    // The cleanup function is crucial for when the component unmounts
+    // to prevent memory leaks.
     return () => clearInterval(timer)
   }, [])
+
 
   return (
     <main className="min-h-screen">
@@ -47,7 +67,7 @@ export default function HomePage() {
         <div className="container-max px-2 sm:px-4 md:px-8">
           <div className="text-center max-w-6xl mx-auto">
             <div className="mb-12">
-              <h1 className="ideathon-title text-5xl md:text-8xl lg:text-9xl font-extrabold tracking-tight text-white mb-4">
+              <h1 className="ideathon-title text-5xl md:text-8xl lg:text-9xl font-ext-rabold tracking-tight text-white mb-4">
                 IDEATHON 4.0
               </h1>
             </div>
@@ -55,33 +75,45 @@ export default function HomePage() {
               Think bold, act together
             </p>
 
-            {/* Redesigned Countdown */}
-            <nav className="countdown-modern max-w-5xl mx-auto mb-12" aria-label="Countdown to event">
-              <h2 className="text-white text-2xl font-bold mb-8 text-center">Event Starts In</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {[
-                  { label: "Days", value: pad(timeLeft.days) },
-                  { label: "Hours", value: pad(timeLeft.hours) },
-                  { label: "Minutes", value: pad(timeLeft.minutes) },
-                  { label: "Seconds", value: pad(timeLeft.seconds) },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="countdown-item p-8 text-center"
-                    aria-label={item.label}
-                  >
-                    <div className="countdown-number mb-3 text-5xl font-mono font-bold animate-pulse">
-                      {item.value}
+            {/* Conditionally render Countdown Timer or "Live" message */}
+            {!isEventLive ? (
+              <nav className="countdown-modern max-w-5xl mx-auto mb-12" aria-label="Countdown to event">
+                <h2 className="text-white text-2xl font-bold mb-8 text-center">Event Starts In</h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                  {[
+                    { label: "Days", value: pad(timeLeft.days) },
+                    { label: "Hours", value: pad(timeLeft.hours) },
+                    { label: "Minutes", value: pad(timeLeft.minutes) },
+                    { label: "Seconds", value: pad(timeLeft.seconds) },
+                  ].map((item) => (
+                    <div
+                      key={item.label}
+                      className="countdown-item p-8 text-center"
+                      aria-label={item.label}
+                    >
+                      <div className="countdown-number mb-3 text-5xl font-mono font-bold animate-pulse">
+                        {item.value}
+                      </div>
+                      <div className="text-gray-300 text-lg font-semibold uppercase tracking-wider">
+                        {item.label}
+                      </div>
                     </div>
-                    <div className="text-gray-300 text-lg font-semibold uppercase tracking-wider">
-                      {item.label}
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+              </nav>
+            ) : (
+              // This block is shown because the event is live
+              <div className="live-event-container max-w-2xl mx-auto mb-12" aria-label="Event is Live">
+                <div className="glass-effect p-8 rounded-2xl animate-pulse">
+                  <h2 className="text-4xl md:text-5xl font-extrabold text-white">
+                    The Event is <span className="text-gradient">LIVE!</span>
+                  </h2>
+                </div>
               </div>
-            </nav>
+            )}
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+              {/* "Register Now" button is now always visible */}
               <Button
                 asChild
                 size="lg"
@@ -178,6 +210,7 @@ export default function HomePage() {
   )
 }
 
+// Helper Component for Feature Cards
 function FeatureCard({
   icon,
   bg,
@@ -200,6 +233,7 @@ function FeatureCard({
   )
 }
 
+// Helper Component for Stat Cards
 function StatCard({ value, label }: { value: string; label: string }) {
   return (
     <div className="w-1/2 md:w-1/4 text-center space-y-2">
